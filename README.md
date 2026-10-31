@@ -14,7 +14,7 @@ na organização e, futuramente, na oferta de promoções e programas de fideliz
 Pequenas e médias empresas (PMEs) e Micro-empreendedores Individuais (MEIs) que trabalham constantemente com base no agendamento de horários.
 
 ## Documentação
-- Características do aplicativo e requisitos de usuário: [docs/REQUISITOS.md](docs/REQUISITOS.md)
+- Características do aplicativo e requisitos: [docs/REQUISITOS.md](docs/REQUISITOS.md)
 - Banco de dados (implementação, diagramas, etc.): [docs/BD.md](docs/BD.md)
 - Protótipos das telas (_wireframes_): [docs/WIREFRAMES.md](docs/WIREFRAMES.md)
 - Tecnologias utilizadas: [docs/TECNOLOGIAS.md](docs/TECNOLOGIAS.md)
