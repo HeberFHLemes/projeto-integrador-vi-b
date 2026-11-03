@@ -13,7 +13,10 @@
 - **SQLite** (https://sqlite.org/)
 
 ## Bibliotecas
+- **flutter_launcher_icons** (https://pub.dev/documentation/flutter_launcher_icons)
+- **google_fonts** (https://pub.dev/packages/google_fonts)
 - **sqflite** (https://pub.dev/packages/sqflite)
+- **url_launcher** (https://pub.dev/packages/url_launcher)
 
 ## Prototipagem das telas (_Wireframes_)
 - **Figma** (https://www.figma.com/)
