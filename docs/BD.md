@@ -34,9 +34,9 @@ Além deste componente, serão criadas classes que representarão as entidades (
 
 Como citado nos comentários do diagrama, os valores monetários (`preco` e `valor_cobrado`) serão salvos em centavos no banco de dados.
 
-Já para o campo `telefone` da tabela **Cliente**, iremos salvar apenas os dígitos, delegando para a aplicação a devida formatação na hora de apresentar ao usuário.
+Já para o campo `telefone` da tabela **Cliente**, iremos salvar apenas os dígitos, delegando para a aplicação a devida formatação na hora de apresentar ao usuário. Porém, o banco validará se são apenas dígitos e se o número de dígitos está no intervalo válido, baseado no padrão [ITU-T E.164](https://www.itu.int/rec/T-REC-E.164), que estabelece que um número de telefone válido nunca terá mais que 15 dígitos (utilizaremos o 7 como número mínimo, para descartar valores obviamente inválidos, mas sem restringir tanto).
 
-Quanto aos campos de data e hora, utilizaremos o padrão ISO 8601, no formato `2026-11-03T14:00:00.000Z`, sempre em UTC e com milissegundos. Ao consultar o dado, a aplicação que converterá para o fuso horário local do usuário. Os campos que se referem ao momento em que um registro foi criado (`criado_em` e `registrado_em`) serão inseridos pelo próprio banco de dados.
+Quanto aos campos de data e hora, utilizaremos o padrão [ISO 8601](https://www.iso8601.com/), no formato `2026-11-03T14:00:00.000Z`, sempre em UTC e com milissegundos. Ao consultar o dado, a aplicação converterá para o fuso horário local do usuário. Os campos que se referem ao momento em que um registro foi criado (`criado_em` e `registrado_em`) serão inseridos pelo próprio banco de dados.
 
 ### Criação das tabelas
 
@@ -46,7 +46,8 @@ Para a criação das tabelas, utilizaremos o _script_ SQL a seguir:
 CREATE TABLE IF NOT EXISTS cliente (
     id          INTEGER PRIMARY KEY,
     nome        TEXT NOT NULL,
-    telefone    TEXT NOT NULL CHECK (telefone NOT GLOB '*[^0-9]*'),
+    telefone    TEXT NOT NULL
+        CHECK (telefone NOT GLOB '*[^0-9]*' AND length(telefone) BETWEEN 7 AND 15),
     criado_em   TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ', 'now')),
     ativo       INTEGER NOT NULL DEFAULT 1 CHECK (ativo IN (0, 1))
 );
