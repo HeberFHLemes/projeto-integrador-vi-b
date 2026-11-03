@@ -17,5 +17,6 @@ Pequenas e médias empresas (PMEs) e Micro-empreendedores Individuais (MEIs) que
 - Características do aplicativo e requisitos: [docs/REQUISITOS.md](docs/REQUISITOS.md)
 - Banco de dados (implementação, diagramas, etc.): [docs/BD.md](docs/BD.md)
 - Protótipos das telas (_wireframes_): [docs/WIREFRAMES.md](docs/WIREFRAMES.md)
+    - Tela com os nomes dos integrantes: [docs/wireframes/sobre.png](docs/wireframes/sobre.png)
 - Tecnologias utilizadas: [docs/TECNOLOGIAS.md](docs/TECNOLOGIAS.md)
 - Geração do arquivo APK: [docs/APK.md](docs/APK.md)
