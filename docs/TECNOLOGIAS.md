@@ -15,6 +15,8 @@
 ## Bibliotecas
 - **flutter_launcher_icons** (https://pub.dev/documentation/flutter_launcher_icons)
 - **google_fonts** (https://pub.dev/packages/google_fonts)
+- **intl** (https://pub.dev/packages/intl)
+- **path** (https://pub.dev/packages/path)
 - **sqflite** (https://pub.dev/packages/sqflite)
 - **url_launcher** (https://pub.dev/packages/url_launcher)
 
