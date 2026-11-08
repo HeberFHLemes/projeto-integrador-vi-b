@@ -18,5 +18,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
   assets:
     - assets/images/
+
+  fonts:
+    - family: Inter # fonte baixada do Google Fonts
+      fonts:
+        - asset: assets/fonts/Inter-VariableFont_opsz,wght.ttf
+          weight: 100 # por usar arquivo de fonte variável
