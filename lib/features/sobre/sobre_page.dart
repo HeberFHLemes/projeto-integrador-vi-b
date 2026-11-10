@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/widgets/voltar_button.dart';
+
 class SobrePage extends StatelessWidget {
   const SobrePage({super.key});
 
@@ -22,7 +24,7 @@ class SobrePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // TODO: botão Voltar
+              const VoltarButton(),
 
               Text('Sobre', style: textTheme.headlineSmall),
 
