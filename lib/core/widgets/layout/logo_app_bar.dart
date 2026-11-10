@@ -28,7 +28,13 @@ class LogoAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         TextButton(
           onPressed: () => context.pushNamed(RouteNames.sobre),
-          child: Text('Sobre'),
+          child: Text(
+            'Sobre',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.bold,
+            )
+          ),
         )
       ],
     );
