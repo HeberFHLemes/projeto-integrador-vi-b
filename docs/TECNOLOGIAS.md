@@ -14,6 +14,7 @@
 
 ## Bibliotecas
 - **flutter_launcher_icons** (https://pub.dev/documentation/flutter_launcher_icons)
+- **get_it** (https://pub.dev/packages/get_it)
 - **go_router** (https://pub.dev/packages/go_router)
 - **google_fonts** (https://pub.dev/packages/google_fonts)
 - **intl** (https://pub.dev/packages/intl)
