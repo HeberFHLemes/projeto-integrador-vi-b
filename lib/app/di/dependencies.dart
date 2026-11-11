@@ -1,0 +1,31 @@
+import 'package:agendados/features/cliente/presentation/viewmodels/cliente_view_model.dart';
+import 'package:get_it/get_it.dart';
+
+import '../../core/database/database_helper.dart';
+import '../../features/cliente/data/cliente_repository_impl.dart';
+import '../../features/cliente/domain/cliente_repository.dart';
+import '../../features/servicos/domain/servico_repository.dart';
+import '../../features/servicos/data/servico_repository_impl.dart';
+
+final getIt = GetIt.instance;
+
+/// Registro das dependências da aplicação utilizando GetIt.
+void registerDependencies() {
+  // Clientes
+  getIt.registerLazySingleton<ClienteRepository>(
+    () => ClienteRepositoryImpl(
+      databaseHelper: DatabaseHelper.instance,
+    ),
+  );
+
+  getIt.registerFactory<ClienteViewModel>(
+    () => ClienteViewModel(getIt<ClienteRepository>()),
+  );
+
+  // Servicos
+  getIt.registerLazySingleton<ServicoRepository>(
+    () => ServicoRepositoryImpl(
+      databaseHelper: DatabaseHelper.instance,
+    ),
+  );
+}
