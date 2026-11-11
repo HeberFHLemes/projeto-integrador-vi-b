@@ -6,14 +6,17 @@ class VoltarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      onPressed: () => context.canPop() ? context.pop() : context.go('/'),
-      icon: const Icon(Icons.chevron_left),
-      label: const Text('Voltar'),
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.zero,
-        alignment: Alignment.centerLeft,
-        foregroundColor: Theme.of(context).colorScheme.primary,
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: TextButton.icon(
+        onPressed: () => context.canPop() ? context.pop() : context.go('/'),
+        icon: const Icon(Icons.chevron_left),
+        label: const Text('Voltar'),
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.only(right: 8),
+          alignment: Alignment.centerLeft,
+          foregroundColor: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }
