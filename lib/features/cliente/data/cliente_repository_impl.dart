@@ -48,7 +48,7 @@ class ClienteRepositoryImpl implements ClienteRepository {
       clienteTable,
       columns: ['id', 'nome', 'telefone', 'criado_em', 'ativo'],
       where: ativo == null ? null : 'ativo = ?',
-      whereArgs: ativo == null ? null : [ativo],
+      whereArgs: ativo == null ? null : [ativo ? 1 : 0],
       orderBy: 'nome ASC',
     );
 

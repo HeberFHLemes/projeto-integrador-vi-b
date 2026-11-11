@@ -47,7 +47,7 @@ class ServicoRepositoryImpl implements ServicoRepository {
       servicoTable,
       columns: ['id', 'nome', 'preco', 'ativo'],
       where: ativo == null ? null : 'ativo = ?',
-      whereArgs: ativo == null ? null : [ativo],
+      whereArgs: ativo == null ? null : [ativo ? 1 : 0],
       orderBy: 'nome ASC',
     );
 
