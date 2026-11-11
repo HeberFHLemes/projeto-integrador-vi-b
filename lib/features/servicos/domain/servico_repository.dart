@@ -1,3 +1,4 @@
+import 'servico_atualizacao.dart';
 import 'servico_cadastro.dart';
 import 'servico.dart';
 
@@ -6,7 +7,13 @@ abstract interface class ServicoRepository {
 
   Future<Servico?> buscarPorId(int id);
 
+  Future<List<Servico>> buscarAtivos();
+
+  Future<List<Servico>> buscarInativos();
+
   Future<int> cadastrar(ServicoCadastro cliente);
+
+  Future<int> atualizar(ServicoAtualizacao cliente);
 
   Future<int> ativar(int id);
 
