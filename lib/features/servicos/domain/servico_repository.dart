@@ -11,9 +11,9 @@ abstract interface class ServicoRepository {
 
   Future<List<Servico>> buscarInativos();
 
-  Future<int> cadastrar(ServicoCadastro cliente);
+  Future<int> cadastrar(ServicoCadastro servico);
 
-  Future<int> atualizar(ServicoAtualizacao cliente);
+  Future<int> atualizar(ServicoAtualizacao servico);
 
   Future<int> ativar(int id);
 
