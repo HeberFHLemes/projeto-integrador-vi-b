@@ -5,6 +5,7 @@ import '../../core/widgets/layout/main_layout.dart';
 import '../../features/agendamento/presentation/pages/agenda_page.dart';
 import '../../features/cliente/presentation/pages/cliente_page.dart';
 import '../../features/relatorios/presentation/pages/relatorios_page.dart';
+import '../../features/servicos/presentation/pages/cadastro_servico_page.dart';
 import '../../features/servicos/presentation/pages/servicos_page.dart';
 import '../../features/sobre/sobre_page.dart';
 import 'route_names.dart';
@@ -70,6 +71,12 @@ final GoRouter appRouter = GoRouter(
               - tela para cadastro de serviços
               - tela para edição de um serviço
             */
+            GoRoute(
+              path: 'cadastro',
+              name: RouteNames.cadastroServico,
+              parentNavigatorKey: rootNavigatorKey,
+              builder: (context, state) => const CadastroServicoPage(),
+            )
           ],
         ),
       ],

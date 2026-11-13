@@ -7,6 +7,7 @@ final appTheme = ThemeData(
   colorScheme: colorScheme,
   fontFamily: fontFamily,
   textTheme: textTheme,
+  inputDecorationTheme: inputDecorationTheme,
 );
 
 final colorScheme = ColorScheme.light(
@@ -56,4 +57,19 @@ final textTheme = const TextTheme(
   ),
 ).apply(
   fontFamily: fontFamily,
+);
+
+final inputDecorationTheme = InputDecorationTheme(
+  floatingLabelBehavior: FloatingLabelBehavior.never,
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: colorScheme.onSurfaceVariant,
+      width: 0.5,
+    ),
+  ),
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: colorScheme.primary
+    ),
+  ),
 );
