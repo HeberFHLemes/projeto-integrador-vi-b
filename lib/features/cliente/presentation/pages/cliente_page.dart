@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/route_names.dart';
 import '../../../../app/di/dependencies.dart';
+import '../../../../core/widgets/primary_button.dart';
 import '../viewmodels/cliente_view_model.dart';
 import '../widgets/cliente_list_tile.dart';
 
@@ -57,23 +58,13 @@ class _ClientePageState extends State<ClientePage> {
                 ),
 
                 // Botão cadastrar cliente
-                SizedBox(
-                  width: double.infinity,
-                  height: kToolbarHeight,
-                  child: FilledButton.icon(
-                    onPressed: () => context.pushNamed(
-                      RouteNames.cadastroCliente
-                    ),
-                    icon: const Icon(Icons.add),
-                    label: const Text('Cliente'),
-                    style: ButtonStyle(
-                      shape: WidgetStateProperty.all(
-                        const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                      ),
-                    ),
+                PrimaryButton(
+                  label: 'Cliente',
+                  onPressed: () => context.pushNamed(
+                    RouteNames.cadastroCliente
                   ),
+                  icon: Icons.add,
+                  isExpanded: true,
                 ),
               ],
             ),

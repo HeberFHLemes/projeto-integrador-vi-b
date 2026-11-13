@@ -16,6 +16,7 @@ final colorScheme = ColorScheme.light(
   onPrimary: Colors.white,
   onSurface: const Color(0xFF17213A),
   onSurfaceVariant: const Color(0xFF59677D),
+  error: const Color(0xFFA33339),
 );
 
 final textTheme = const TextTheme(
