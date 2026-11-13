@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/di/dependencies.dart';
 import '../../../../app/router/route_names.dart';
 import '../../../../core/utils/money_formatter.dart';
+import '../../../../core/ui/app_filter_segmented_button.dart';
 import '../../../../core/ui/app_material_banner.dart';
 import '../../../../core/ui/primary_button.dart';
 import '../viewmodels/servicos_view_model.dart';
@@ -41,6 +42,9 @@ class _ServicosPageState extends State<ServicosPage> {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return ListenableBuilder(
       listenable: _viewModel,
       builder: (context, child) {
@@ -49,16 +53,63 @@ class _ServicosPageState extends State<ServicosPage> {
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 4,
+              spacing: 8,
               children: [
                 Text(
                   'Serviços',
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
 
-                // TODO: filtro de busca por nome
+                const SizedBox(height: 8),
 
-                // TODO: Seletor do filtro ativos/inativos
+                Text(
+                  'Buscar',
+                  style: textTheme.labelLarge?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                SearchBar(
+                  // TODO: filtro de busca por nome
+                  autoFocus: false,
+                  hintText: 'Nome do serviço',
+                  side: WidgetStatePropertyAll(
+                    BorderSide(
+                      strokeAlign: BorderSide.strokeAlignOutside,
+                      color: Colors.black26,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                  keyboardType: TextInputType.text,
+                  elevation: WidgetStatePropertyAll(0),
+                  shape: WidgetStatePropertyAll(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    )
+                  ),
+                  onChanged: (nome) {} // TODO,
+                ),
+
+                const SizedBox(height: 4),
+
+                // Filtro Ativos/Inativos
+                AppFilterSegmentedButton<bool>(
+                  segments: const [
+                    ButtonSegment<bool>(
+                      value: true,
+                      label: Text('Ativos'),
+                    ),
+                    ButtonSegment<bool>(
+                      value: false,
+                      label: Text('Inativos'),
+                    ),
+                  ],
+                  selected: {_viewModel.mostrarAtivos},
+                  onSelectionChanged: (status) {
+                    _viewModel.alterarFiltro(status.first);
+                  },
+                ),
 
                 // Listagem dos serviços
                 Expanded(
@@ -125,7 +176,7 @@ class _ServicosPageState extends State<ServicosPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '$quantidade servicos',
+          '$quantidade serviços',
           style: Theme.of(context).textTheme.labelMedium,
         ),
 

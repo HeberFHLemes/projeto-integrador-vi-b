@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/route_names.dart';
 import '../../../../app/di/dependencies.dart';
+import '../../../../core/ui/app_filter_segmented_button.dart';
 import '../../../../core/ui/primary_button.dart';
 import '../viewmodels/cliente_view_model.dart';
 import '../widgets/cliente_list_tile.dart';
@@ -50,7 +51,23 @@ class _ClientePageState extends State<ClientePage> {
 
                 // TODO: filtro de busca por nome ou telefone
 
-                // TODO: Seletor do filtro ativos/inativos
+                // Filtro Ativos/Inativos
+                AppFilterSegmentedButton<bool>(
+                  segments: const [
+                    ButtonSegment<bool>(
+                      value: true,
+                      label: Text('Ativos'),
+                    ),
+                    ButtonSegment<bool>(
+                      value: false,
+                      label: Text('Inativos'),
+                    ),
+                  ],
+                  selected: {_viewModel.mostrarAtivos},
+                  onSelectionChanged: (status) {
+                    _viewModel.alterarFiltro(status.first);
+                  },
+                ),
 
                 // Listagem dos clientes
                 Expanded(
