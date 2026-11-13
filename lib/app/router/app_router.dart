@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/widgets/layout/main_layout.dart';
+import '../../core/ui/layouts/main_layout.dart';
 import '../../features/agendamento/presentation/pages/agenda_page.dart';
 import '../../features/cliente/presentation/pages/cliente_page.dart';
 import '../../features/relatorios/presentation/pages/relatorios_page.dart';

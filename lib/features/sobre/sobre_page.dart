@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../core/widgets/voltar_button.dart';
+import '../../core/ui/voltar_button.dart';
 
 class SobrePage extends StatelessWidget {
   const SobrePage({super.key});
@@ -18,14 +18,17 @@ class SobrePage extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const VoltarButton(),
+        automaticallyImplyActions: false,
+      ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView(
+            scrollDirection: Axis.vertical,
             children: [
-              const VoltarButton(),
-
               Text('Sobre', style: textTheme.headlineSmall),
 
               // TODO: conteúdo

@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/di/dependencies.dart';
 import '../../../../app/router/route_names.dart';
 import '../../../../core/utils/money_formatter.dart';
-import '../../../../core/widgets/app_material_banner.dart';
-import '../../../../core/widgets/primary_button.dart';
+import '../../../../core/ui/app_material_banner.dart';
+import '../../../../core/ui/primary_button.dart';
 import '../viewmodels/servicos_view_model.dart';
 import '../widgets/servico_list_tile.dart';
 

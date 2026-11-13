@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/route_names.dart';
 import '../../../../app/di/dependencies.dart';
-import '../../../../core/widgets/primary_button.dart';
+import '../../../../core/ui/primary_button.dart';
 import '../viewmodels/cliente_view_model.dart';
 import '../widgets/cliente_list_tile.dart';
 
