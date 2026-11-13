@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/di/dependencies.dart';
+import '../../../../core/widgets/app_material_banner.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/voltar_button.dart';
 import '../formatters/money_input_formatter.dart';
@@ -206,6 +207,12 @@ class _CadastroServicoPageState extends State<CadastroServicoPage> {
     }
     else {
       _formKey.currentState?.reset();
+
+      AppMaterialBanner.show(
+        context,
+        message: _viewModel.errorMessage!,
+        isError: true,
+      );
     }
   }
 }
