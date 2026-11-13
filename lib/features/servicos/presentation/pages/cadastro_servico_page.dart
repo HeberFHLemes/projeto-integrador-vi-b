@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/di/dependencies.dart';
 import '../../../../core/ui/app_material_banner.dart';
+import '../../../../core/ui/layouts/secondary_layout.dart';
 import '../../../../core/ui/primary_button.dart';
-import '../../../../core/ui/voltar_button.dart';
 import '../formatters/money_input_formatter.dart';
 import '../viewmodels/cadastro_servico_view_model.dart';
 
@@ -43,117 +43,107 @@ class _CadastroServicoPageState extends State<CadastroServicoPage> {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyActions: false,
-        automaticallyImplyLeading: false,
-        title: const VoltarButton(),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return SecondaryLayout(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (_viewModel.errorMessage != null)
+            Text(
+              _viewModel.errorMessage!,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            spacing: 8,
             children: [
-              if (_viewModel.errorMessage != null)
-                Text(
-                  _viewModel.errorMessage!,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
-                ),
-
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                spacing: 8,
-                children: [
-                  Text(
-                    'Cadastro de serviço',
-                    style: textTheme.headlineSmall,
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  Text(
-                    'Dados do serviço',
-                    style: textTheme.labelLarge?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  const SizedBox(height: 4),
-
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      spacing: 8,
-                      children: [
-                        Text(
-                          'Nome',
-                          style: textTheme.labelLarge?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-
-                        // Campo para nome
-                        TextFormField(
-                          maxLines: 1,
-                          maxLength: 30,
-                          controller: _nomeController,
-                          decoration: InputDecoration(
-                            hintText: 'Nome do serviço',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: _validarNome,
-                        ),
-
-                        const SizedBox(height: 8,),
-
-                        Text(
-                          'Preço',
-                          style: textTheme.labelLarge?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-
-                        TextFormField(
-                          maxLines: 1,
-                          maxLength: 15, // Evitar atingir limite de int
-                          controller: _precoController,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            MoneyInputFormatter(),
-                          ],
-                          decoration: InputDecoration(
-                            hintText: 'Preço do serviço',
-                            border: const OutlineInputBorder(),
-                          ),
-                          validator: _validarPreco,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+              Text(
+                'Cadastro de serviço',
+                style: textTheme.headlineSmall,
               ),
 
-              const Spacer(),
+              const SizedBox(height: 8),
 
+              Text(
+                'Dados do serviço',
+                style: textTheme.labelLarge?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
 
-              PrimaryButton(
-                label: 'Cadastrar serviço',
-                onPressed: _viewModel.isLoading ? null : _submit,
-                isExpanded: true,
+              const SizedBox(height: 4),
+
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  spacing: 8,
+                  children: [
+                    Text(
+                      'Nome',
+                      style: textTheme.labelLarge?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    // Campo para nome
+                    TextFormField(
+                      maxLines: 1,
+                      maxLength: 30,
+                      controller: _nomeController,
+                      decoration: InputDecoration(
+                        hintText: 'Nome do serviço',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: _validarNome,
+                    ),
+
+                    const SizedBox(height: 8,),
+
+                    Text(
+                      'Preço',
+                      style: textTheme.labelLarge?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    TextFormField(
+                      maxLines: 1,
+                      maxLength: 15, // Evitar atingir limite de int
+                      controller: _precoController,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        MoneyInputFormatter(),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: 'Preço do serviço',
+                        border: const OutlineInputBorder(),
+                      ),
+                      validator: _validarPreco,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        ),
+
+          const Spacer(),
+
+
+          PrimaryButton(
+            label: 'Cadastrar serviço',
+            onPressed: _viewModel.isLoading ? null : _submit,
+            isExpanded: true,
+          ),
+        ],
       ),
     );
   }
