@@ -151,6 +151,29 @@ class _ServicosPageState extends State<ServicosPage> {
     }
   }
 
+  // Abre a tela de edição e espera o resultado para mostrar ao usuário
+  Future<void> _abrirAtualizacao(int idServico) async {
+    final resultado = await context.pushNamed<bool>(
+        RouteNames.atualizacaoServico,
+        pathParameters: { 'id': idServico.toString() }
+    );
+
+    if (!mounted) return;
+
+    if (resultado == true) {
+      await _viewModel.carregarServicos();
+
+      if (!mounted) return;
+
+      // Sem diferenciar se foi alteração dos campos
+      // nome e preço ou de status (ativo / inativo).
+      AppMaterialBanner.show(
+        context,
+        message: 'Serviço atualizado com sucesso!',
+      );
+    }
+  }
+
   Widget _montarConteudo() {
     if (_viewModel.isLoading) {
       return const Center(
@@ -191,11 +214,8 @@ class _ServicosPageState extends State<ServicosPage> {
               return ServicoListTile(
                 nome: servico.nome,
                 preco: _moneyFormatter.format(servico.preco),
-                onTap: () => context.goNamed(
-                  // redireciona direto para tela de atualização do serviço
-                  RouteNames.atualizacaoServico,
-                  pathParameters: { 'id': servico.id.toString() }
-                ),
+                // redireciona direto para tela de atualização do serviço
+                onTap: () => _abrirAtualizacao(servico.id),
               );
             },
             separatorBuilder: (_, _) => const Divider(thickness: 0.2),

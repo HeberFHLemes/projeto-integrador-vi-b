@@ -5,6 +5,7 @@ import '../../core/ui/layouts/main_layout.dart';
 import '../../features/agendamento/presentation/pages/agenda_page.dart';
 import '../../features/cliente/presentation/pages/cliente_page.dart';
 import '../../features/relatorios/presentation/pages/relatorios_page.dart';
+import '../../features/servicos/presentation/pages/atualizacao_servico_page.dart';
 import '../../features/servicos/presentation/pages/cadastro_servico_page.dart';
 import '../../features/servicos/presentation/pages/servicos_page.dart';
 import '../../features/sobre/sobre_page.dart';
@@ -66,16 +67,32 @@ final GoRouter appRouter = GoRouter(
           name: RouteNames.servicos,
           builder: (context, state) => const ServicosPage(),
           routes: [
-            /*
-            TODO:
-              - tela para cadastro de serviços
-              - tela para edição de um serviço
-            */
             GoRoute(
               path: 'cadastro',
               name: RouteNames.cadastroServico,
               parentNavigatorKey: rootNavigatorKey,
               builder: (context, state) => const CadastroServicoPage(),
+            ),
+
+            GoRoute(
+              path: ':id',
+              name: RouteNames.atualizacaoServico,
+              parentNavigatorKey: rootNavigatorKey,
+              builder: (context, state) {
+                final id = int.tryParse(
+                  state.pathParameters['id'] ?? '',
+                );
+
+                if (id == null || id <= 0) {
+                  // TODO: informar página não encontrada / id inválido
+                  throw const FormatException('ID do serviço inválido');
+                }
+
+                return AtualizacaoServicoPage(
+                  key: ValueKey(id),
+                  id: id,
+                );
+              },
             )
           ],
         ),
