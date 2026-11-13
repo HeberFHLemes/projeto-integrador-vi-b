@@ -1,11 +1,13 @@
-import 'package:agendados/features/cliente/presentation/viewmodels/cliente_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/database/database_helper.dart';
 import '../../features/cliente/data/cliente_repository_impl.dart';
 import '../../features/cliente/domain/cliente_repository.dart';
+import '../../features/cliente/presentation/viewmodels/cliente_view_model.dart';
 import '../../features/servicos/domain/servico_repository.dart';
 import '../../features/servicos/data/servico_repository_impl.dart';
+import '../../features/servicos/presentation/viewmodels/cadastro_servico_view_model.dart';
+import '../../features/servicos/presentation/viewmodels/servicos_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -27,5 +29,13 @@ void registerDependencies() {
     () => ServicoRepositoryImpl(
       databaseHelper: DatabaseHelper.instance,
     ),
+  );
+
+  getIt.registerFactory<ServicosViewModel>(
+    () => ServicosViewModel(getIt<ServicoRepository>())
+  );
+
+  getIt.registerFactory<CadastroServicoViewModel>(
+    () => CadastroServicoViewModel(getIt<ServicoRepository>())
   );
 }
