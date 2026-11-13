@@ -23,6 +23,8 @@ class _CadastroServicoPageState extends State<CadastroServicoPage> {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _precoController = TextEditingController();
 
+  final int _priceMaxLength = 12;
+
   @override
   void initState() {
     super.initState();
@@ -96,7 +98,7 @@ class _CadastroServicoPageState extends State<CadastroServicoPage> {
                     // Campo para nome
                     TextFormField(
                       maxLines: 1,
-                      maxLength: 30,
+                      maxLength: 50,
                       controller: _nomeController,
                       decoration: InputDecoration(
                         hintText: 'Nome do serviço',
@@ -117,11 +119,12 @@ class _CadastroServicoPageState extends State<CadastroServicoPage> {
 
                     TextFormField(
                       maxLines: 1,
-                      maxLength: 15, // Evitar atingir limite de int
                       controller: _precoController,
                       keyboardType: TextInputType.number,
                       inputFormatters: [
-                        MoneyInputFormatter(),
+                        // Impedindo digitação de caracteres além do limite
+                        // no próprio formatador.
+                        MoneyInputFormatter(maxLength: _priceMaxLength),
                       ],
                       decoration: InputDecoration(
                         hintText: 'Preço do serviço',
