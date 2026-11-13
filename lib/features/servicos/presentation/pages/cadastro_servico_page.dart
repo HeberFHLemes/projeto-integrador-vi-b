@@ -135,9 +135,6 @@ class _CadastroServicoPageState extends State<CadastroServicoPage> {
             ],
           ),
 
-          const Spacer(),
-
-
           PrimaryButton(
             label: 'Cadastrar serviço',
             onPressed: _viewModel.isLoading ? null : _submit,
