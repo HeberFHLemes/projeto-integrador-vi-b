@@ -51,6 +51,7 @@ class _AtualizacaoServicoPageState extends State<AtualizacaoServicoPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return ListenableBuilder(
       listenable: _viewModel,
@@ -84,10 +85,21 @@ class _AtualizacaoServicoPageState extends State<AtualizacaoServicoPage> {
         return SecondaryLayout(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            spacing: 8,
             children: [
               Text(
                 'Atualização de serviço',
                 style: textTheme.headlineSmall,
+              ),
+
+              const SizedBox(height: 8),
+
+              Text(
+                'Dados do serviço',
+                style: textTheme.labelLarge?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
 
               Expanded(
@@ -100,8 +112,6 @@ class _AtualizacaoServicoPageState extends State<AtualizacaoServicoPage> {
                   submitLabel: 'Atualizar serviço',
                 ),
               ),
-
-              const SizedBox(height: 8),
 
               SecondaryButton(
                 label: '${servico.ativo ? 'Desativar' : 'Ativar'} serviço',

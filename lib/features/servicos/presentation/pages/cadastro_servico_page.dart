@@ -70,8 +70,6 @@ class _CadastroServicoPageState extends State<CadastroServicoPage> {
             ),
           ),
 
-          const SizedBox(height: 4),
-
           // Formulário em si
           Expanded(
             child: ServicoForm(
