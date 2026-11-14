@@ -22,11 +22,15 @@ class ServicosPage extends StatefulWidget {
 class _ServicosPageState extends State<ServicosPage> {
   late final ServicosViewModel _viewModel;
 
+  late final TextEditingController _buscaController;
+
   late final MoneyFormatter _moneyFormatter;
 
   @override
   void initState() {
     super.initState();
+
+    _buscaController = TextEditingController();
 
     _moneyFormatter = MoneyFormatter();
 
@@ -36,6 +40,7 @@ class _ServicosPageState extends State<ServicosPage> {
 
   @override
   void dispose() {
+    _buscaController.dispose();
     _viewModel.dispose();
     super.dispose();
   }
@@ -71,7 +76,8 @@ class _ServicosPageState extends State<ServicosPage> {
                 ),
 
                 SearchBar(
-                  // TODO: filtro de busca por nome
+                  controller: _buscaController,
+                  onChanged: _viewModel.filtrarPorNome,
                   autoFocus: false,
                   hintText: 'Nome do serviço',
                   side: WidgetStatePropertyAll(
@@ -88,7 +94,6 @@ class _ServicosPageState extends State<ServicosPage> {
                       borderRadius: BorderRadius.all(Radius.circular(8)),
                     )
                   ),
-                  onChanged: (nome) {} // TODO,
                 ),
 
                 const SizedBox(height: 4),

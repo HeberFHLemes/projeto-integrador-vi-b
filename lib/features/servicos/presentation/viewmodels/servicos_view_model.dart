@@ -9,8 +9,13 @@ class ServicosViewModel extends ChangeNotifier {
 
   ServicosViewModel(this._servicoRepository);
 
-  /// Conjunto de servicos encontrados
+  /// Conjunto de serviços a serem apresentados
   List<Servico> servicos = [];
+
+  /// Conjunto de serviços carregados
+  List<Servico> _servicos = [];
+
+  String termoBusca = '';
 
   bool mostrarAtivos = true;
 
@@ -24,13 +29,13 @@ class ServicosViewModel extends ChangeNotifier {
 
     try {
       // busca dos serviços cadastrados
-      servicos = mostrarAtivos
-          ? await _servicoRepository.buscarAtivos()
-          : await _servicoRepository.buscarInativos();
+      _servicos = mostrarAtivos
+        ? await _servicoRepository.buscarAtivos()
+        : await _servicoRepository.buscarInativos();
 
+      _aplicarFiltroPorNome();
     } catch (e) {
       errorMessage = 'Não foi possível carregar os serviços.';
-
       servicos = [];
 
     } finally {
@@ -44,5 +49,28 @@ class ServicosViewModel extends ChangeNotifier {
 
     mostrarAtivos = ativo;
     await carregarServicos();
+  }
+
+  void filtrarPorNome(String valor) {
+    if (termoBusca == valor) return;
+
+    termoBusca = valor;
+
+    if (valor.isEmpty) {
+      servicos = _servicos;
+    } else {
+      _aplicarFiltroPorNome();
+    }
+
+    notifyListeners();
+  }
+
+  // Filtro básico por nome, sem novas buscas no banco
+  void _aplicarFiltroPorNome() {
+    final busca = termoBusca.trim().toLowerCase();
+
+    servicos = _servicos.where((servico) {
+      return servico.nome.toLowerCase().contains(busca);
+    }).toList();
   }
 }
