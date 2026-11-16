@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 /// Utilitário para formatar datas.
@@ -26,9 +27,7 @@ final class DateFormatter {
   String fullDate(DateTime date) {
     final today = DateTime.now();
 
-    final isToday = date.year == today.year &&
-        date.month == today.month &&
-        date.day == today.day;
+    final isToday = DateUtils.isSameDay(today, date);
 
     final formatted = _fullDate.format(date);
 
