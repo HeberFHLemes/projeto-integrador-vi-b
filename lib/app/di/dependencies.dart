@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import '../../core/database/database_helper.dart';
 import '../../features/cliente/data/cliente_repository_impl.dart';
 import '../../features/cliente/domain/cliente_repository.dart';
+import '../../features/cliente/presentation/viewmodels/atualizacao_cliente_view_model.dart';
 import '../../features/cliente/presentation/viewmodels/cadastro_cliente_view_model.dart';
 import '../../features/cliente/presentation/viewmodels/cliente_view_model.dart';
 import '../../features/cliente/presentation/viewmodels/ficha_cliente_view_model.dart';
@@ -33,6 +34,10 @@ void registerDependencies() {
 
   getIt.registerFactory<FichaClienteViewModel>(
     () => FichaClienteViewModel(getIt<ClienteRepository>()),
+  );
+
+  getIt.registerFactory<AtualizacaoClienteViewModel>(
+    () => AtualizacaoClienteViewModel(getIt<ClienteRepository>()),
   );
 
   // Servicos

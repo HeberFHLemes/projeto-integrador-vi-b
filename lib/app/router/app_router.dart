@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/ui/layouts/main_layout.dart';
 import '../../features/agendamento/presentation/pages/agenda_page.dart';
+import '../../features/cliente/presentation/pages/atualizacao_cliente_page.dart';
 import '../../features/cliente/presentation/pages/cadastro_cliente_page.dart';
 import '../../features/cliente/presentation/pages/cliente_page.dart';
 import '../../features/cliente/presentation/pages/ficha_cliente_page.dart';
@@ -73,7 +74,27 @@ final GoRouter appRouter = GoRouter(
                 );
               },
             ),
-            // TODO: tela para editar dados de um cliente
+
+            GoRoute(
+              path: ':id/atualizar',
+              name: RouteNames.atualizacaoCliente,
+              parentNavigatorKey: rootNavigatorKey,
+              builder: (context, state) {
+                final id = int.tryParse(
+                  state.pathParameters['id'] ?? '',
+                );
+
+                if (id == null || id <= 0) {
+                  // TODO: informar página não encontrada / id inválido
+                  throw const FormatException('ID de cliente inválido');
+                }
+
+                return AtualizacaoClientePage(
+                  key: ValueKey(id),
+                  id: id,
+                );
+              },
+            ),
           ],
         ),
 

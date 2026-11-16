@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/route_names.dart';
 import '../../../../app/di/dependencies.dart';
+import '../../../../core/ui/app_material_banner.dart';
 import '../../../../core/utils/phone_number_utils.dart';
 import '../../../../core/ui/layouts/secondary_layout.dart';
 import '../../../../core/ui/primary_button.dart';
@@ -22,12 +23,16 @@ class FichaClientePage extends StatefulWidget {
 class _FichaClientePageState extends State<FichaClientePage> {
   late final FichaClienteViewModel _viewModel;
 
+  late final int clienteId;
+
   @override
   void initState() {
     super.initState();
 
+    clienteId = widget.id;
+
     _viewModel = getIt<FichaClienteViewModel>();
-    _viewModel.buscarCliente(widget.id);
+    _viewModel.buscarCliente(clienteId);
   }
 
   @override
@@ -119,10 +124,7 @@ class _FichaClientePageState extends State<FichaClientePage> {
                 // Botão editar cliente
                 SecondaryButton(
                   label: 'Editar cliente',
-                  onPressed: () => context.goNamed(
-                    RouteNames.atualizacaoCliente,
-                    pathParameters: { 'id': cliente.id.toString() },
-                  ),
+                  onPressed: _abrirAtualizacao,
                   isExpanded: true,
                 ),
 
@@ -154,5 +156,25 @@ class _FichaClientePageState extends State<FichaClientePage> {
         ],
       ),
     );
+  }
+
+  void _abrirAtualizacao() async {
+    final resultado = await context.pushNamed<bool>(
+      RouteNames.atualizacaoCliente,
+      pathParameters: { 'id': clienteId.toString() }
+    );
+
+    if (!mounted) return;
+
+    if (resultado == true) {
+      await _viewModel.buscarCliente(clienteId);
+
+      if (!mounted) return;
+
+      AppMaterialBanner.show(
+        context,
+        message: 'Cliente atualizado com sucesso!',
+      );
+    }
   }
 }

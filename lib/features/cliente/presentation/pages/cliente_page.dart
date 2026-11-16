@@ -160,7 +160,7 @@ class _ClientePageState extends State<ClientePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          quantidade == 1 ? 'cliente' : 'clientes',
+          "$quantidade ${quantidade == 1 ? 'cliente' : 'clientes'}",
           style: Theme.of(context).textTheme.labelMedium,
         ),
 
