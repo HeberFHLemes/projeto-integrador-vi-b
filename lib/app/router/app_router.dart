@@ -5,6 +5,7 @@ import '../../core/ui/layouts/main_layout.dart';
 import '../../features/agendamento/presentation/pages/agenda_page.dart';
 import '../../features/cliente/presentation/pages/cadastro_cliente_page.dart';
 import '../../features/cliente/presentation/pages/cliente_page.dart';
+import '../../features/cliente/presentation/pages/ficha_cliente_page.dart';
 import '../../features/relatorios/presentation/pages/relatorios_page.dart';
 import '../../features/servicos/presentation/pages/atualizacao_servico_page.dart';
 import '../../features/servicos/presentation/pages/cadastro_servico_page.dart';
@@ -52,11 +53,27 @@ final GoRouter appRouter = GoRouter(
               parentNavigatorKey: rootNavigatorKey,
               builder: (context, state) => CadastroClientePage(),
             ),
-            /*
-              TODO:
-                - tela para consultar ficha de um cliente
-                - tela para editar dados de um cliente
-             */
+            GoRoute(
+              path: ':id',
+              name: RouteNames.fichaCliente,
+              parentNavigatorKey: rootNavigatorKey,
+              builder: (context, state) {
+                final id = int.tryParse(
+                  state.pathParameters['id'] ?? '',
+                );
+
+                if (id == null || id <= 0) {
+                  // TODO: informar página não encontrada / id inválido
+                  throw const FormatException('ID de cliente inválido');
+                }
+
+                return FichaClientePage(
+                  key: ValueKey(id),
+                  id: id,
+                );
+              },
+            ),
+            // TODO: tela para editar dados de um cliente
           ],
         ),
 
