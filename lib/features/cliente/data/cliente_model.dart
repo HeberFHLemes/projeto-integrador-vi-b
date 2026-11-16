@@ -1,3 +1,4 @@
+import '../../../core/utils/phone_number_utils.dart';
 import '../domain/cliente.dart';
 
 /// Modelo de dados de Cliente
@@ -24,7 +25,7 @@ class ClienteModel extends Cliente {
     return {
       'id': cliente.id,
       'nome': cliente.nome,
-      'telefone': cliente.telefone,
+      'telefone': PhoneNumberUtils.onlyDigits(cliente.telefone),
       'criado_em': cliente.criadoEm.toUtc().toIso8601String(),
       'ativo': cliente.ativo ? 1 : 0,
     };
