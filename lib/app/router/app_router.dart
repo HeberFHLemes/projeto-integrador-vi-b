@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/ui/layouts/main_layout.dart';
 import '../../features/agendamento/presentation/pages/agenda_page.dart';
+import '../../features/cliente/presentation/pages/cadastro_cliente_page.dart';
 import '../../features/cliente/presentation/pages/cliente_page.dart';
 import '../../features/relatorios/presentation/pages/relatorios_page.dart';
 import '../../features/servicos/presentation/pages/atualizacao_servico_page.dart';
@@ -45,9 +46,14 @@ final GoRouter appRouter = GoRouter(
           name: RouteNames.clientes,
           builder: (context, state) => ClientePage(),
           routes: [
+            GoRoute(
+              path: 'cadastro',
+              name: RouteNames.cadastroCliente,
+              parentNavigatorKey: rootNavigatorKey,
+              builder: (context, state) => CadastroClientePage(),
+            ),
             /*
               TODO:
-                - tela para cadastro de novo cliente
                 - tela para consultar ficha de um cliente
                 - tela para editar dados de um cliente
              */

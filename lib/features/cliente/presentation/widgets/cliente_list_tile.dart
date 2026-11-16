@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/utils/phone_number_utils.dart';
+
 class ClienteListTile extends StatelessWidget {
 
   const ClienteListTile({
@@ -23,7 +25,7 @@ class ClienteListTile extends StatelessWidget {
           fontWeight: FontWeight.bold
         ),
       ),
-      subtitle: Text(telefone),
+      subtitle: Text(PhoneNumberUtils.format(telefone)),
       trailing: Icon(
         Icons.chevron_right,
         color: Theme.of(context).colorScheme.primary,
