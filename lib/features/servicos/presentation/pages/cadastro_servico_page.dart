@@ -51,7 +51,7 @@ class _CadastroServicoPageState extends State<CadastroServicoPage> {
             Text(
               _viewModel.errorMessage!,
               style: TextStyle(
-                color: Theme.of(context).colorScheme.error,
+                color: colorScheme.error,
               ),
             ),
 

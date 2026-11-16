@@ -204,7 +204,7 @@ class _ServicosPageState extends State<ServicosPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '$quantidade serviços',
+          quantidade == 1 ? 'serviço' : 'serviços',
           style: Theme.of(context).textTheme.labelMedium,
         ),
 
