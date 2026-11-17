@@ -10,12 +10,16 @@ final class DateFormatter {
     _weekday = DateFormat.EEEE(locale),
     _shortDate = DateFormat.MMMd(locale),
     _fullDate = DateFormat.yMMMMd(locale),
+    _dayMonthYear = DateFormat('dd/MM/yyyy', locale),
     _hourMinute = DateFormat.Hm(locale);
 
   final DateFormat _weekday;
   final DateFormat _shortDate;
   final DateFormat _fullDate;
+  final DateFormat _dayMonthYear;
   final DateFormat _hourMinute;
+
+  String dayMonthYear(DateTime date) => _dayMonthYear.format(date);
 
   /// Formato: 'Terça-feira, 3 nov.'
   String shortDate(DateTime date) {
