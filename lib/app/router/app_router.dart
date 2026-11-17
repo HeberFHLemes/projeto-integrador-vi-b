@@ -1,3 +1,4 @@
+import 'package:agendados/features/agendamento/presentation/pages/cadastro_agendamento_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,11 +32,14 @@ final GoRouter appRouter = GoRouter(
           name: RouteNames.agenda,
           builder: (context, state) => const AgendaPage(),
           routes: [
-            // rotas sem o mesmo layout
-            // (rootNavigatorKey como parentNavigatorKey)
+            GoRoute(
+              path: 'cadastro',
+              name: RouteNames.novoAgendamento,
+              parentNavigatorKey: rootNavigatorKey,
+              builder: (context, state) => CadastroAgendamentoPage(),
+            ),
             /*
               TODO:
-                - tela para novo agendamento
                 - tela para consultar detalhes de um agendamento
                 - tela para editar um agendamento
              */

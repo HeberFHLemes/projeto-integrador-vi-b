@@ -1,6 +1,10 @@
+import 'package:agendados/features/agendamento/data/agendamento_repository_impl.dart';
+import 'package:agendados/features/agendamento/domain/agendamento_repository.dart';
+import 'package:agendados/features/agendamento/presentation/viewmodels/agenda_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/database/database_helper.dart';
+import '../../features/agendamento/presentation/viewmodels/cadastro_agendamento_view_model.dart';
 import '../../features/cliente/data/cliente_repository_impl.dart';
 import '../../features/cliente/domain/cliente_repository.dart';
 import '../../features/cliente/presentation/viewmodels/atualizacao_cliente_view_model.dart';
@@ -57,5 +61,24 @@ void registerDependencies() {
 
   getIt.registerFactory<AtualizacaoServicoViewModel>(
     () => AtualizacaoServicoViewModel(getIt<ServicoRepository>())
+  );
+
+  // Agendamentos
+  getIt.registerLazySingleton<AgendamentoRepository>(
+    () => AgendamentoRepositoryImpl(
+      databaseHelper: DatabaseHelper.instance,
+    ),
+  );
+
+  getIt.registerFactory<AgendaViewModel>(
+    () => AgendaViewModel(getIt<AgendamentoRepository>())
+  );
+
+  getIt.registerFactory<CadastroAgendamentoViewModel>(
+    () => CadastroAgendamentoViewModel(
+      agendamentoRepository: getIt<AgendamentoRepository>(),
+      clienteRepository: getIt<ClienteRepository>(),
+      servicoRepository: getIt<ServicoRepository>(),
+    ),
   );
 }
