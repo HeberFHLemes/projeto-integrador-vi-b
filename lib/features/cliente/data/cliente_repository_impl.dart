@@ -25,8 +25,8 @@ class ClienteRepositoryImpl implements ClienteRepository {
     );
 
     return result.isNotEmpty
-        ? ClienteModel.fromMap(result.first)
-        : null;
+      ? ClienteModel.fromMap(result.first)
+      : null;
   }
 
   @override

@@ -1,4 +1,3 @@
-import '../../../core/utils/phone_number_utils.dart';
 import '../domain/cliente.dart';
 
 /// Modelo de dados de Cliente
@@ -19,15 +18,5 @@ class ClienteModel extends Cliente {
       criadoEm: DateTime.parse(map['criado_em'] as String),
       ativo: (map['ativo'] as int) == 1,
     );
-  }
-
-  static Map<String, Object?> toMap(Cliente cliente) {
-    return {
-      'id': cliente.id,
-      'nome': cliente.nome,
-      'telefone': PhoneNumberUtils.onlyDigits(cliente.telefone),
-      'criado_em': cliente.criadoEm.toUtc().toIso8601String(),
-      'ativo': cliente.ativo ? 1 : 0,
-    };
   }
 }

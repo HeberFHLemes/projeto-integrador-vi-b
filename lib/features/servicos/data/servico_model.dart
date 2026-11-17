@@ -16,13 +16,4 @@ class ServicoModel extends Servico {
       ativo: (map['ativo'] as int) == 1,
     );
   }
-
-  static Map<String, Object?> toMap(Servico servico) {
-    return {
-      'id': servico.id,
-      'nome': servico.nome,
-      'preco': servico.preco,
-      'ativo': servico.ativo ? 1 : 0,
-    };
-  }
 }
