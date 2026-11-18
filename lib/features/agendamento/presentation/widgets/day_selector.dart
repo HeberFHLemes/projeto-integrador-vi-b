@@ -37,21 +37,24 @@ class DaySelector extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _dateFormatter.shortDate(selectedDate),
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+            child: GestureDetector(
+              onTap: () => _openCalendar(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _dateFormatter.shortDate(selectedDate),
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
 
-                Text(
-                  _dateFormatter.fullDate(selectedDate),
-                  style: textTheme.bodyMedium,
-                ),
-              ],
+                  Text(
+                    _dateFormatter.fullDate(selectedDate),
+                    style: textTheme.bodyMedium,
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -77,7 +80,7 @@ class DaySelector extends StatelessWidget {
     onDateChanged(date.add(Duration(days: days)));
   }
 
-  Future<void> openCalendar(BuildContext context) async {
+  Future<void> _openCalendar(BuildContext context) async {
     final date = await showDatePicker(
       context: context,
       initialDate: selectedDate,
