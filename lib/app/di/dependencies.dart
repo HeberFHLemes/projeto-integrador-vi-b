@@ -6,6 +6,7 @@ import '../../core/utils/money_formatter.dart';
 import '../../features/agendamento/data/agendamento_repository_impl.dart';
 import '../../features/agendamento/domain/agendamento_repository.dart';
 import '../../features/agendamento/presentation/viewmodels/agenda_view_model.dart';
+import '../../features/agendamento/presentation/viewmodels/detalhes_agendamento_view_model.dart';
 import '../../features/agendamento/presentation/viewmodels/cadastro_agendamento_view_model.dart';
 import '../../features/cliente/data/cliente_repository_impl.dart';
 import '../../features/cliente/domain/cliente_repository.dart';
@@ -36,10 +37,6 @@ void registerDependencies() {
 
   getIt.registerFactory<CadastroClienteViewModel>(
     () => CadastroClienteViewModel(getIt<ClienteRepository>()),
-  );
-
-  getIt.registerFactory<FichaClienteViewModel>(
-    () => FichaClienteViewModel(getIt<ClienteRepository>()),
   );
 
   getIt.registerFactory<AtualizacaoClienteViewModel>(
@@ -81,6 +78,18 @@ void registerDependencies() {
       agendamentoRepository: getIt<AgendamentoRepository>(),
       clienteRepository: getIt<ClienteRepository>(),
       servicoRepository: getIt<ServicoRepository>(),
+    ),
+  );
+
+  getIt.registerFactory<DetalhesAgendamentoViewModel>(
+    () => DetalhesAgendamentoViewModel(getIt<AgendamentoRepository>()),
+  );
+
+  // Detalhes do cliente
+  getIt.registerFactory<FichaClienteViewModel>(
+    () => FichaClienteViewModel(
+      clienteRepository: getIt<ClienteRepository>(),
+      agendamentoRepository: getIt<AgendamentoRepository>(),
     ),
   );
 
