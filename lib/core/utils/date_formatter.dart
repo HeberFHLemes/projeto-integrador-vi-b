@@ -27,6 +27,12 @@ final class DateFormatter {
     return '$weekday, ${_shortDate.format(date)}';
   }
 
+  /// Formato: 'Terça-feira, 3 de novembro de 2026'
+  String detailedDate(DateTime date) {
+    final weekday = _capitalize(_weekday.format(date));
+    return '$weekday, ${_fullDate.format(date)}';
+  }
+
   /// Formato: 'Hoje, 3 de novembro de 2026'
   String fullDate(DateTime date) {
     final today = DateTime.now();

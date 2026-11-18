@@ -1,9 +1,11 @@
-import 'package:agendados/features/agendamento/data/agendamento_repository_impl.dart';
-import 'package:agendados/features/agendamento/domain/agendamento_repository.dart';
-import 'package:agendados/features/agendamento/presentation/viewmodels/agenda_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/database/database_helper.dart';
+import '../../core/utils/date_formatter.dart';
+import '../../core/utils/money_formatter.dart';
+import '../../features/agendamento/data/agendamento_repository_impl.dart';
+import '../../features/agendamento/domain/agendamento_repository.dart';
+import '../../features/agendamento/presentation/viewmodels/agenda_view_model.dart';
 import '../../features/agendamento/presentation/viewmodels/cadastro_agendamento_view_model.dart';
 import '../../features/cliente/data/cliente_repository_impl.dart';
 import '../../features/cliente/domain/cliente_repository.dart';
@@ -80,5 +82,14 @@ void registerDependencies() {
       clienteRepository: getIt<ClienteRepository>(),
       servicoRepository: getIt<ServicoRepository>(),
     ),
+  );
+
+  // Utils
+  getIt.registerLazySingleton<DateFormatter>(
+    () => DateFormatter(),
+  );
+
+  getIt.registerLazySingleton<MoneyFormatter>(
+    () => MoneyFormatter(),
   );
 }
