@@ -77,8 +77,10 @@ class AgendamentoForm extends StatelessWidget {
               // Cliente
               DropdownButtonFormField<int>(
                 initialValue: clienteId,
-                decoration: const InputDecoration(
-                  labelText: 'Selecionar cliente',
+                decoration: InputDecoration(
+                  labelText: (clientes.isNotEmpty)
+                    ? 'Selecionar cliente'
+                    : 'Nenhum cliente encontrado',
                 ),
                 items: [
                   for (final cliente in clientes)
@@ -107,8 +109,10 @@ class AgendamentoForm extends StatelessWidget {
               // Serviço
               DropdownButtonFormField<int>(
                 initialValue: servicoId,
-                decoration: const InputDecoration(
-                  labelText: 'Selecionar um serviço',
+                decoration: InputDecoration(
+                  labelText: (servicos.isNotEmpty)
+                    ? 'Selecionar um serviço'
+                    : 'Nenhum serviço encontrado',
                 ),
                 padding: EdgeInsetsGeometry.symmetric(horizontal: 4),
                 items: [

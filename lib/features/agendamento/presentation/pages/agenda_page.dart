@@ -19,7 +19,7 @@ class AgendaPage extends StatefulWidget {
 
 class _AgendaPageState extends State<AgendaPage> {
 
-  final DateFormatter _dateFormatter = DateFormatter();
+  final DateFormatter _dateFormatter = getIt<DateFormatter>();
 
   late final AgendaViewModel _viewModel;
 

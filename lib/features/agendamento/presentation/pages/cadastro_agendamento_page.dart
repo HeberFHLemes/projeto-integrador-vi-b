@@ -23,7 +23,7 @@ class _CadastroAgendamentoPageState extends State<CadastroAgendamentoPage> {
 
   final TextEditingController _observacoesController = TextEditingController();
 
-  final DateFormatter _dateFormatter = DateFormatter();
+  final DateFormatter _dateFormatter = getIt<DateFormatter>();
 
   @override
   void initState() {
