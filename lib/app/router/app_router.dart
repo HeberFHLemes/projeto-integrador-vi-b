@@ -1,9 +1,10 @@
-import 'package:agendados/features/agendamento/presentation/pages/cadastro_agendamento_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/ui/layouts/main_layout.dart';
 import '../../features/agendamento/presentation/pages/agenda_page.dart';
+import '../../features/agendamento/presentation/pages/cadastro_agendamento_page.dart';
+import '../../features/agendamento/presentation/pages/detalhes_agendamento_page.dart';
 import '../../features/cliente/presentation/pages/atualizacao_cliente_page.dart';
 import '../../features/cliente/presentation/pages/cadastro_cliente_page.dart';
 import '../../features/cliente/presentation/pages/cliente_page.dart';
@@ -33,14 +34,33 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) => const AgendaPage(),
           routes: [
             GoRoute(
-              path: 'cadastro',
+              path: 'agenda/cadastro',
               name: RouteNames.novoAgendamento,
               parentNavigatorKey: rootNavigatorKey,
               builder: (context, state) => CadastroAgendamentoPage(),
             ),
+            GoRoute(
+              path: 'agenda/:id',
+              name: RouteNames.detalhesAgendamento,
+              parentNavigatorKey: rootNavigatorKey,
+              builder: (context, state) {
+                final id = int.tryParse(
+                  state.pathParameters['id'] ?? '',
+                );
+
+                if (id == null || id <= 0) {
+                  // TODO: informar página não encontrada / id inválido
+                  throw const FormatException('ID do agendamento inválido');
+                }
+
+                return DetalhesAgendamentoPage(
+                  key: ValueKey(id),
+                  id: id,
+                );
+              },
+            ),
             /*
               TODO:
-                - tela para consultar detalhes de um agendamento
                 - tela para editar um agendamento
              */
           ],

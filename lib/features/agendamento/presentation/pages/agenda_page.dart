@@ -140,10 +140,7 @@ class _AgendaPageState extends State<AgendaPage> {
                 statusTextColor: agendamento.status.color(
                   Theme.of(context).colorScheme
                 ),
-                onTap: () => context.pushNamed(
-                  RouteNames.detalhesAgendamento,
-                  pathParameters: { 'id': agendamento.id.toString() },
-                ),
+                onTap: () => _abrirDetalhes(agendamento.id),
               );
             },
             separatorBuilder: (context, state) => const SizedBox(height: 4),
@@ -151,5 +148,24 @@ class _AgendaPageState extends State<AgendaPage> {
         ),
       ],
     );
+  }
+
+  Future<void> _abrirDetalhes(int agendamentoId) async {
+    final resultado = await context.pushNamed<bool>(
+      RouteNames.detalhesAgendamento,
+      pathParameters: { 'id': agendamentoId.toString() },
+    );
+
+    if (!mounted) return;
+
+    if (resultado == true) {
+      // cancelar um agendamento retorna true
+      AppMaterialBanner.show(
+        context,
+        message: 'Agendamento removido com sucesso!',
+      );
+
+      _viewModel.carregarAgendamentos();
+    }
   }
 }
