@@ -6,6 +6,7 @@ import '../../../../app/router/route_names.dart';
 import '../../../../core/ui/app_material_banner.dart';
 import '../../../../core/ui/primary_button.dart';
 import '../../../../core/utils/date_formatter.dart';
+import '../extensions/status_agendamento_extension.dart';
 import '../viewmodels/agenda_view_model.dart';
 import '../widgets/agendamento_list_tile.dart';
 import '../widgets/day_selector.dart';
@@ -60,7 +61,6 @@ class _AgendaPageState extends State<AgendaPage> {
                   dateFormatter: _dateFormatter,
                 ),
 
-                // TODO: Listagem de agendamentos
                 Expanded(child: buildAgendamentos()),
 
                 PrimaryButton(
@@ -130,26 +130,16 @@ class _AgendaPageState extends State<AgendaPage> {
             itemBuilder: (context, index) {
               final agendamento = _viewModel.agendamentos[index];
 
-              String status = 'Agendado';
-              Color statusTextColor = Theme.of(context).colorScheme.primary;
-
-              if (agendamento.atendimento != null) {
-                status = 'Realizado';
-              } else if (
-                agendamento.dataHora.toLocal().isBefore(DateTime.now())
-              ) {
-                status = 'Não realizado';
-                statusTextColor = Theme.of(context).colorScheme.error;
-              }
-
               return AgendamentoListTile(
                 horario: _dateFormatter.hourMinute(
                   agendamento.dataHora.toLocal()
                 ),
                 nomeCliente: agendamento.cliente.nome,
                 nomeServico: agendamento.servico.nome,
-                status: status,
-                statusTextColor: statusTextColor,
+                status: agendamento.status.label,
+                statusTextColor: agendamento.status.color(
+                  Theme.of(context).colorScheme
+                ),
                 onTap: () => context.pushNamed(
                   RouteNames.detalhesAgendamento,
                   pathParameters: { 'id': agendamento.id.toString() },
