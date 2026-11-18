@@ -4,12 +4,15 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/router/route_names.dart';
 import '../../../../app/di/dependencies.dart';
 import '../../../../core/ui/app_material_banner.dart';
-import '../../../../core/utils/phone_number_utils.dart';
 import '../../../../core/ui/layouts/secondary_layout.dart';
 import '../../../../core/ui/primary_button.dart';
 import '../../../../core/ui/secondary_button.dart';
+import '../../../../core/utils/date_formatter.dart';
+import '../../../../core/utils/money_formatter.dart';
+import '../../../../core/utils/phone_number_utils.dart';
 import '../../domain/cliente.dart';
 import '../viewmodels/ficha_cliente_view_model.dart';
+import '../widgets/agendamento_cliente_list_tile.dart';
 
 class FichaClientePage extends StatefulWidget {
   const FichaClientePage({super.key, required this.id});
@@ -24,6 +27,9 @@ class _FichaClientePageState extends State<FichaClientePage> {
   late final FichaClienteViewModel _viewModel;
 
   late final int clienteId;
+
+  final DateFormatter _dateFormatter = getIt<DateFormatter>();
+  final MoneyFormatter _moneyFormatter = getIt<MoneyFormatter>();
 
   @override
   void initState() {
@@ -137,7 +143,43 @@ class _FichaClientePageState extends State<FichaClientePage> {
                   ),
                 ),
 
-                // TODO: Listagem dos agendamentos relacionados ao cliente.
+                Expanded(
+                  child: ListView.separated(
+                    itemCount: _viewModel.agendamentos.length,
+                    itemBuilder: (context, index) {
+                      final agendamento = _viewModel.agendamentos[index];
+
+                      String statusAgendamento = 'Agendado';
+
+                      if (agendamento.atendimento != null) {
+                        statusAgendamento = 'Realizado';
+
+                      } else if (
+                        agendamento.dataHora.isBefore(DateTime.now())
+                      ) {
+                        statusAgendamento = 'Não realizado';
+                      }
+
+                      final data = agendamento.atendimento?.realizadoEm
+                        ?? agendamento.dataHora;
+
+                      final preco = agendamento.atendimento?.valorCobrado
+                        ?? agendamento.servico.preco;
+
+                      return AgendamentoClienteListTile(
+                        dataAgendamento: _dateFormatter.dayMonthAndHour(data),
+                        servico: agendamento.servico.nome,
+                        status: statusAgendamento,
+                        preco: _moneyFormatter.format(preco),
+                        onTap: () => context.goNamed(
+                          RouteNames.detalhesAgendamento,
+                          pathParameters: { 'id': agendamento.id.toString() }
+                        ),
+                      );
+                    },
+                    separatorBuilder: (_, _) => const Divider(thickness: 0.2),
+                  ),
+                ),
               ],
             ),
           ),
