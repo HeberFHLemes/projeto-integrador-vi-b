@@ -12,6 +12,8 @@ class DetalhesAgendamentoViewModel extends ChangeNotifier {
   Agendamento? agendamento;
 
   bool isLoading = false;
+  bool isUpdatingStatus = false;
+  bool isCancelling = false;
   String? errorMessage;
 
   Future<void> buscarAgendamento(int id) async {
@@ -38,44 +40,48 @@ class DetalhesAgendamentoViewModel extends ChangeNotifier {
 
   /// Altera o status de um agendamento. Se estiver como realizado,
   /// para não realizado. Se como agendado ou não realizado, para realizado.
-  Future<void> alterarStatus() async {
-    if (agendamento == null) {
-      throw Exception('Agendamento não encontrado');
-    }
+  Future<bool> alterarStatus() async {
+    if (agendamento == null || isUpdatingStatus) return false;
 
-    isLoading = true;
+    isUpdatingStatus = true;
     errorMessage = null;
     notifyListeners();
 
     try {
-      final status = agendamento!.status;
+      final atual = agendamento!;
 
-      if (status == StatusAgendamento.realizado) {
-        await _agendamentoRepository.desmarcarComoRealizado(agendamento!.id);
+      if (atual.status == StatusAgendamento.realizado) {
+        await _agendamentoRepository.desmarcarComoRealizado(atual.id);
 
       } else {
-        await _agendamentoRepository.marcarComoRealizado(agendamento!.id);
-
+        await _agendamentoRepository.marcarComoRealizado(atual.id);
       }
 
-      agendamento = await _agendamentoRepository.buscarPorId(agendamento!.id);
+      agendamento = await _agendamentoRepository.buscarPorId(atual.id);
+
+      if (agendamento == null) {
+        throw Exception('Agendamento não encontrado');
+      }
+
+      return true;
 
     } catch (e) {
       errorMessage = 'Não foi possível alterar o status do agendamento.';
+      return false;
 
     } finally {
-      isLoading = false;
+      isUpdatingStatus = false;
       notifyListeners();
     }
   }
 
   /// Cancela (remove) um agendamento, se este ainda estiver como Agendado.
   Future<bool> cancelarAgendamento() async {
-    if (agendamento == null) {
+    if (agendamento == null || isCancelling) {
       throw Exception('Agendamento não encontrado');
     }
 
-    isLoading = true;
+    isCancelling = true;
     errorMessage = null;
     notifyListeners();
 
@@ -94,7 +100,7 @@ class DetalhesAgendamentoViewModel extends ChangeNotifier {
       return false;
 
     } finally {
-      isLoading = false;
+      isCancelling = false;
       notifyListeners();
     }
   }

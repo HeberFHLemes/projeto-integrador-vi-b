@@ -245,16 +245,17 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
   }
 
   Future<void> _alterarStatus() async {
-    await _viewModel.alterarStatus();
+    final atualizado = await _viewModel.alterarStatus();
 
     if (!mounted) return;
 
-    final erro = _viewModel.errorMessage;
-
     AppMaterialBanner.show(
       context,
-      message: erro ?? 'Agendamento atualizado com sucesso!',
-      isError: erro != null,
+      message: atualizado
+        ? 'Agendamento atualizado com sucesso!'
+        : _viewModel.errorMessage
+          ?? 'Não foi possível atualizar o agendamento.',
+      isError: !atualizado,
     );
   }
 
