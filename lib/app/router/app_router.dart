@@ -37,7 +37,13 @@ final GoRouter appRouter = GoRouter(
               path: 'agenda/cadastro',
               name: RouteNames.novoAgendamento,
               parentNavigatorKey: rootNavigatorKey,
-              builder: (context, state) => CadastroAgendamentoPage(),
+              builder: (context, state) {
+                final dataInicial = state.extra as DateTime?;
+
+                return CadastroAgendamentoPage(
+                  dataInicial: dataInicial,
+                );
+              },
             ),
             GoRoute(
               path: 'agenda/:id',

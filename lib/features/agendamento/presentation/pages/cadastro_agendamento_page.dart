@@ -9,7 +9,12 @@ import '../viewmodels/cadastro_agendamento_view_model.dart';
 import '../widgets/agendamento_form.dart';
 
 class CadastroAgendamentoPage extends StatefulWidget {
-  const CadastroAgendamentoPage({super.key});
+  const CadastroAgendamentoPage({
+    super.key,
+    this.dataInicial,
+  });
+
+  final DateTime? dataInicial;
 
   @override
   State<CadastroAgendamentoPage> createState() => _CadastroAgendamentoPageState();
@@ -30,6 +35,7 @@ class _CadastroAgendamentoPageState extends State<CadastroAgendamentoPage> {
     super.initState();
 
     _viewModel = getIt<CadastroAgendamentoViewModel>();
+    _viewModel.selecionarData(widget.dataInicial);
     _viewModel.carregar();
   }
 

@@ -79,7 +79,10 @@ class _AgendaPageState extends State<AgendaPage> {
 
   Future<void> _abrirCadastro() async {
     final resultado = await context.pushNamed<bool>(
-      RouteNames.novoAgendamento
+      RouteNames.novoAgendamento,
+      // enviando ao formulário a data selecionada
+      // para ser usada como valor inicial do campo data.
+      extra: _viewModel.dataSelecionada,
     );
 
     if (!mounted) return;
