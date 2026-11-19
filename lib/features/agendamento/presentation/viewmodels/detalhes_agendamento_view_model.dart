@@ -58,19 +58,19 @@ class DetalhesAgendamentoViewModel extends ChangeNotifier {
 
       }
 
+      agendamento = await _agendamentoRepository.buscarPorId(agendamento!.id);
+
     } catch (e) {
       errorMessage = 'Não foi possível alterar o status do agendamento.';
 
     } finally {
       isLoading = false;
       notifyListeners();
-
-      buscarAgendamento(agendamento!.id);
     }
   }
 
   /// Cancela (remove) um agendamento, se este ainda estiver como Agendado.
-  Future<void> cancelarAgendamento() async {
+  Future<bool> cancelarAgendamento() async {
     if (agendamento == null) {
       throw Exception('Agendamento não encontrado');
     }
@@ -86,8 +86,12 @@ class DetalhesAgendamentoViewModel extends ChangeNotifier {
 
       await _agendamentoRepository.remover(agendamento!.id);
 
+      return true;
+
     } catch (e) {
       errorMessage = 'Não foi possível cancelar o agendamento.';
+
+      return false;
 
     } finally {
       isLoading = false;

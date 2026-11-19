@@ -247,17 +247,15 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
   Future<void> _alterarStatus() async {
     await _viewModel.alterarStatus();
 
-
-
     if (!mounted) return;
 
-    if (_viewModel.errorMessage != null) {
-      AppMaterialBanner.show(
-        context,
-        message: _viewModel.errorMessage!,
-        isError: true,
-      );
-    }
+    final erro = _viewModel.errorMessage;
+
+    AppMaterialBanner.show(
+      context,
+      message: erro ?? 'Agendamento atualizado com sucesso!',
+      isError: erro != null,
+    );
   }
 
   Future<void> _abrirAtualizacao(int agendamentoId) async {
@@ -275,25 +273,26 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
 
       AppMaterialBanner.show(
         context,
-        message: 'Cliente cadastrado com sucesso!',
+        message: 'Agendamento atualizado com sucesso!',
       );
     }
   }
 
   Future<void> _cancelarAgendamento() async {
-    await _viewModel.cancelarAgendamento();
+    final cancelado = await _viewModel.cancelarAgendamento();
 
     if (!mounted) return;
 
-    if (_viewModel.errorMessage == null) {
+    if (cancelado) {
       context.pop(true);
-
-    } else {
-      AppMaterialBanner.show(
-        context,
-        message: _viewModel.errorMessage!,
-        isError: true,
-      );
+      return;
     }
+
+    AppMaterialBanner.show(
+      context,
+      message: _viewModel.errorMessage
+        ?? 'Não foi possível cancelar o agendamento',
+      isError: true,
+    );
   }
 }
