@@ -1,3 +1,4 @@
+import 'package:agendados/features/agendamento/presentation/enums/resultado_agendamento.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -154,21 +155,20 @@ class _AgendaPageState extends State<AgendaPage> {
   }
 
   Future<void> _abrirDetalhes(int agendamentoId) async {
-    final resultado = await context.pushNamed<bool>(
+    final resultado = await context.pushNamed<ResultadoAgendamento>(
       RouteNames.detalhesAgendamento,
       pathParameters: { 'id': agendamentoId.toString() },
     );
 
-    if (!mounted) return;
+    if (!mounted || resultado == null) return;
 
-    if (resultado == true) {
-      // cancelar um agendamento retorna true
+    if (resultado == ResultadoAgendamento.cancelado) {
       AppMaterialBanner.show(
         context,
-        message: 'Agendamento removido com sucesso!',
+        message: 'Agendamento cancelado com sucesso!',
       );
-
-      _viewModel.carregarAgendamentos();
     }
+
+    _viewModel.carregarAgendamentos();
   }
 }

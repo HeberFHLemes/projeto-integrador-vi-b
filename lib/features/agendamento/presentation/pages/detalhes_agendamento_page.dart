@@ -1,3 +1,4 @@
+import 'package:agendados/features/agendamento/presentation/enums/resultado_agendamento.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,6 +33,8 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
   
   final DateFormatter _dateFormatter = getIt<DateFormatter>();
   final MoneyFormatter _moneyFormatter = getIt<MoneyFormatter>();
+
+  bool _houveAlteracao = false;
 
   @override
   void initState() {
@@ -71,6 +74,14 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
     );
   }
 
+  void _voltar() {
+    context.pop(
+      _houveAlteracao
+        ? ResultadoAgendamento.atualizado
+        : null,
+    );
+  }
+
   Widget _buildDetalhes(Agendamento agendamento) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
@@ -85,6 +96,7 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
     } • ${agendamento.cliente.nome}';
 
     return SecondaryLayout(
+      onBack: _voltar,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -247,6 +259,8 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
   Future<void> _alterarStatus() async {
     final atualizado = await _viewModel.alterarStatus();
 
+    _houveAlteracao = true;
+
     if (!mounted) return;
 
     AppMaterialBanner.show(
@@ -270,6 +284,8 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
     if (resultado == true) {
       await _viewModel.buscarAgendamento(agendamentoId);
 
+      _houveAlteracao = true;
+
       if (!mounted) return;
 
       AppMaterialBanner.show(
@@ -285,7 +301,7 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
     if (!mounted) return;
 
     if (cancelado) {
-      context.pop(true);
+      context.pop(ResultadoAgendamento.cancelado);
       return;
     }
 
