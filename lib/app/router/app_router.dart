@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/ui/layouts/main_layout.dart';
 import '../../features/agendamento/presentation/pages/agenda_page.dart';
+import '../../features/agendamento/presentation/pages/atualizacao_agendamento_page.dart';
 import '../../features/agendamento/presentation/pages/cadastro_agendamento_page.dart';
 import '../../features/agendamento/presentation/pages/detalhes_agendamento_page.dart';
 import '../../features/cliente/presentation/pages/atualizacao_cliente_page.dart';
@@ -55,7 +56,6 @@ final GoRouter appRouter = GoRouter(
                 );
 
                 if (id == null || id <= 0) {
-                  // TODO: informar página não encontrada / id inválido
                   throw const FormatException('ID do agendamento inválido');
                 }
 
@@ -65,10 +65,25 @@ final GoRouter appRouter = GoRouter(
                 );
               },
             ),
-            /*
-              TODO:
-                - tela para editar um agendamento
-             */
+            GoRoute(
+              path: 'agenda/:id/atualizar',
+              name: RouteNames.atualizacaoAgendamento,
+              parentNavigatorKey: rootNavigatorKey,
+              builder: (context, state) {
+                final id = int.tryParse(
+                  state.pathParameters['id'] ?? '',
+                );
+
+                if (id == null || id <= 0) {
+                  throw const FormatException('ID do agendamento inválido');
+                }
+
+                return AtualizacaoAgendamentoPage(
+                  key: ValueKey(id),
+                  id: id,
+                );
+              },
+            ),
           ],
         ),
 
@@ -94,7 +109,6 @@ final GoRouter appRouter = GoRouter(
                 );
 
                 if (id == null || id <= 0) {
-                  // TODO: informar página não encontrada / id inválido
                   throw const FormatException('ID de cliente inválido');
                 }
 
@@ -115,7 +129,6 @@ final GoRouter appRouter = GoRouter(
                 );
 
                 if (id == null || id <= 0) {
-                  // TODO: informar página não encontrada / id inválido
                   throw const FormatException('ID de cliente inválido');
                 }
 
@@ -158,7 +171,6 @@ final GoRouter appRouter = GoRouter(
                 );
 
                 if (id == null || id <= 0) {
-                  // TODO: informar página não encontrada / id inválido
                   throw const FormatException('ID do serviço inválido');
                 }
 

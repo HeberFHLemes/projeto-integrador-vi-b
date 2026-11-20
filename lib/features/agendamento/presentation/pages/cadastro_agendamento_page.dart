@@ -49,7 +49,6 @@ class _CadastroAgendamentoPageState extends State<CadastroAgendamentoPage> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
 
     return ListenableBuilder(
       listenable: _viewModel,
@@ -76,23 +75,15 @@ class _CadastroAgendamentoPageState extends State<CadastroAgendamentoPage> {
             spacing: 8,
             children: [
               Text(
-                'Cadastro de cliente',
+                'Novo agendamento',
                 style: textTheme.headlineSmall,
               ),
 
               const SizedBox(height: 8),
 
-              Text(
-                'Dados do cliente',
-                style: textTheme.labelLarge?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(8),
                   child: AgendamentoForm(
                     formKey: _formKey,
                     clientes: _viewModel.clientes,
