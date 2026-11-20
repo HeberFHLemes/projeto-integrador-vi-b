@@ -1,3 +1,6 @@
+import 'package:agendados/features/relatorios/data/relatorio_repository_impl.dart';
+import 'package:agendados/features/relatorios/domain/relatorio_repository.dart';
+import 'package:agendados/features/relatorios/presentation/viewmodels/relatorios_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/database/database_helper.dart';
@@ -99,6 +102,19 @@ void registerDependencies() {
     () => FichaClienteViewModel(
       clienteRepository: getIt<ClienteRepository>(),
       agendamentoRepository: getIt<AgendamentoRepository>(),
+    ),
+  );
+
+  // Relatórios
+  getIt.registerLazySingleton<RelatorioRepository>(
+    () => RelatorioRepositoryImpl(
+      databaseHelper: DatabaseHelper.instance,
+    ),
+  );
+
+  getIt.registerFactory<RelatoriosViewModel>(
+    () => RelatoriosViewModel(
+      repository: getIt<RelatorioRepository>(),
     ),
   );
 
