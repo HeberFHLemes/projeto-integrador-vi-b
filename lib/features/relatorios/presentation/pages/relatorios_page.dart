@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../app/di/dependencies.dart';
+import '../../../../app/router/route_names.dart';
+import '../../../../core/utils/money_formatter.dart';
 import '../../../../core/ui/app_filter_segmented_button.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../viewmodels/relatorios_view_model.dart';
+import '../widgets/relatorio_faturamento_view.dart';
 
 class RelatoriosPage extends StatefulWidget {
   const RelatoriosPage({super.key});
@@ -17,6 +21,7 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
   late final RelatoriosViewModel _viewModel;
 
   final DateFormatter _dateFormatter = getIt<DateFormatter>();
+  final MoneyFormatter _moneyFormatter = getIt<MoneyFormatter>();
 
   @override
   void initState() {
@@ -125,8 +130,12 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
 
     // TODO: Componentes para cada relatório
     return switch (_viewModel.tipoRelatorio) {
-      TipoRelatorio.faturamento =>
-        Center(child: Text('Relatórios - Faturamento')),
+      TipoRelatorio.faturamento => RelatorioFaturamentoView(
+        faturamento: _viewModel.relatorioFaturamento,
+        moneyFormatter: _moneyFormatter,
+        dateFormatter: _dateFormatter,
+        onAtendimentoPressed: _abrirDetalhesAgendamento,
+      ),
       TipoRelatorio.frequencia =>
         Center(child: Text('Relatórios - Clientes frequentes')),
     };
@@ -149,5 +158,14 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
         fim: periodo.end,
       );
     }
+  }
+
+  void _abrirDetalhesAgendamento(int id) {
+    context.goNamed(
+      RouteNames.detalhesAgendamento,
+      pathParameters: {
+        'id': id.toString(),
+      },
+    );
   }
 }

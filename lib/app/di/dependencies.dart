@@ -1,6 +1,3 @@
-import 'package:agendados/features/relatorios/data/relatorio_repository_impl.dart';
-import 'package:agendados/features/relatorios/domain/relatorio_repository.dart';
-import 'package:agendados/features/relatorios/presentation/viewmodels/relatorios_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../core/database/database_helper.dart';
@@ -23,6 +20,9 @@ import '../../features/servicos/data/servico_repository_impl.dart';
 import '../../features/servicos/presentation/viewmodels/atualizacao_servico_view_model.dart';
 import '../../features/servicos/presentation/viewmodels/cadastro_servico_view_model.dart';
 import '../../features/servicos/presentation/viewmodels/servicos_view_model.dart';
+import '../../features/relatorios/data/relatorio_repository_impl.dart';
+import '../../features/relatorios/domain/relatorio_repository.dart';
+import '../../features/relatorios/presentation/viewmodels/relatorios_view_model.dart';
 
 final getIt = GetIt.instance;
 

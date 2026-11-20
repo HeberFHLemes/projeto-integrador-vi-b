@@ -47,6 +47,11 @@ final class DateFormatter {
     return prefix != null ? '$prefix, $formatted' : formatted;
   }
 
+  /// Formato: '03 nov.';
+  String dayMonth(DateTime date) {
+    return _shortDate.format(date);
+  }
+
   /// Formato: '03 nov. • 09:30'
   String dayMonthAndHour(DateTime date) {
     return '${_shortDate.format(date)} • ${_hourMinute.format(date)}';
