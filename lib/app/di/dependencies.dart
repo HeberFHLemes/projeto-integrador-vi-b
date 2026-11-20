@@ -6,6 +6,7 @@ import '../../core/utils/money_formatter.dart';
 import '../../features/agendamento/data/agendamento_repository_impl.dart';
 import '../../features/agendamento/domain/agendamento_repository.dart';
 import '../../features/agendamento/presentation/viewmodels/agenda_view_model.dart';
+import '../../features/agendamento/presentation/viewmodels/atualizacao_agendamento_view_model.dart';
 import '../../features/agendamento/presentation/viewmodels/detalhes_agendamento_view_model.dart';
 import '../../features/agendamento/presentation/viewmodels/cadastro_agendamento_view_model.dart';
 import '../../features/cliente/data/cliente_repository_impl.dart';
@@ -75,6 +76,14 @@ void registerDependencies() {
 
   getIt.registerFactory<CadastroAgendamentoViewModel>(
     () => CadastroAgendamentoViewModel(
+      agendamentoRepository: getIt<AgendamentoRepository>(),
+      clienteRepository: getIt<ClienteRepository>(),
+      servicoRepository: getIt<ServicoRepository>(),
+    ),
+  );
+
+  getIt.registerFactory<AtualizacaoAgendamentoViewModel>(
+    () => AtualizacaoAgendamentoViewModel(
       agendamentoRepository: getIt<AgendamentoRepository>(),
       clienteRepository: getIt<ClienteRepository>(),
       servicoRepository: getIt<ServicoRepository>(),
