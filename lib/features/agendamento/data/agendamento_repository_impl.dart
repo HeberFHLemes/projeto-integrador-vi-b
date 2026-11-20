@@ -36,6 +36,7 @@ class AgendamentoRepositoryImpl implements AgendamentoRepository {
     LEFT JOIN atendimento at ON at.agendamento_id = a.id
   ''';
 
+  /// Consulta todos os agendamentos registrados.
   @override
   Future<List<Agendamento>> buscarTodos() async {
     final db = await _databaseHelper.database;
@@ -48,6 +49,7 @@ class AgendamentoRepositoryImpl implements AgendamentoRepository {
     ];
   }
 
+  /// Busca um agendamento pelo seu ID.
   @override
   Future<Agendamento?> buscarPorId(int id) async {
     final db = await _databaseHelper.database;
@@ -61,14 +63,25 @@ class AgendamentoRepositoryImpl implements AgendamentoRepository {
       : AgendamentoModel.fromMap(result.first);
   }
 
+  /// Busca os agendamentos de um determinado dia
   @override
   Future<List<Agendamento>> buscarPorDia(DateTime dia) async {
-    final inicio = DateTime(dia.year, dia.month, dia.day)
-      .toUtc().toIso8601String();
+    final inicio = DateTime(dia.year, dia.month, dia.day);
 
-    final fim = DateTime(dia.year, dia.month, dia.day + 1)
-      .toUtc().toIso8601String();
+    final fim = DateTime(dia.year, dia.month, dia.day + 1);
 
+    return buscarRealizadosPorPeriodo(
+      inicio: inicio,
+      fim: fim
+    );
+  }
+
+  /// Busca os agendamentos de um determinado período
+  @override
+  Future<List<Agendamento>> buscarRealizadosPorPeriodo({
+    required DateTime inicio,
+    required DateTime fim,
+  }) async {
     final db = await _databaseHelper.database;
 
     final result = await db.rawQuery('''
@@ -77,21 +90,16 @@ class AgendamentoRepositoryImpl implements AgendamentoRepository {
         AND a.data_hora < ?
       ORDER BY a.data_hora ASC
     ''',
-      [inicio, fim],
+      [
+        inicio.toUtc().toIso8601String(),
+        fim.toUtc().toIso8601String(),
+      ],
     );
 
     return result.map(AgendamentoModel.fromMap).toList();
   }
 
-  // TODO: implementar buscarPorPeriodo
-  @override
-  Future<List<Agendamento>> buscarRealizadosPorPeriodo({
-    required DateTime inicio,
-    required DateTime fim,
-  }) async {
-    throw UnimplementedError();
-  }
-
+  /// Busca todos os agendamentos referentes a um cliente.
   @override
   Future<List<Agendamento>> buscarPorCliente(int clienteId) async {
     final db = await _databaseHelper.database;
@@ -106,6 +114,7 @@ class AgendamentoRepositoryImpl implements AgendamentoRepository {
     ];
   }
 
+  /// Busca todos os agendamentos referentes a um serviço.
   @override
   Future<List<Agendamento>> buscarPorServico(int servicoId) async {
     final db = await _databaseHelper.database;
@@ -120,13 +129,36 @@ class AgendamentoRepositoryImpl implements AgendamentoRepository {
     ];
   }
 
-  // TODO: implementar atualizar
+  /// Atualiza os dados de um agendamento, se não tiver sido realizado.
   @override
-  Future<int> atualizar(AgendamentoAtualizacao cliente) async {
-    throw UnimplementedError();
+  Future<int> atualizar(AgendamentoAtualizacao agendamento) async {
+    final db = await _databaseHelper.database;
+
+    final realizado = await foiRealizado(agendamento.id);
+
+    if (realizado) {
+      throw Exception('Agendamento já realizado');
+    }
+
+    return await db.update(
+      agendamentoTable,
+      {
+        'cliente_id': agendamento.clienteId,
+        'servico_id': agendamento.servicoId,
+        'data_hora': agendamento.dataHora.toUtc().toIso8601String(),
+        'observacoes': agendamento.observacoes,
+      },
+      where: '''
+        id = ?
+        AND id NOT IN (
+          SELECT agendamento_id FROM Atendimento
+        )
+      ''',
+      whereArgs: [agendamento.id],
+    );
   }
 
-
+  /// Registra um novo agendamento.
   @override
   Future<int> cadastrar(AgendamentoCadastro cadastro) async {
     final db = await _databaseHelper.database;
@@ -152,8 +184,7 @@ class AgendamentoRepositoryImpl implements AgendamentoRepository {
     return result.isNotEmpty;
   }
 
-  /// Marca um agendamento como realizado. Isto é, registra um atendimento.
-  /// Necessário que não seja um agendamento futuro.
+  /// Marca um agendamento como realizado (registra um atendimento).
   @override
   Future<void> marcarComoRealizado(int id) async {
     final db = await _databaseHelper.database;
@@ -193,6 +224,8 @@ class AgendamentoRepositoryImpl implements AgendamentoRepository {
     });
   }
 
+  /// Marca um agendamento como não realizado,
+  /// isto é, remove o registro de seu atendimento.
   @override
   Future<void> desmarcarComoRealizado(int id) async {
     if (!(await foiRealizado(id))) {
