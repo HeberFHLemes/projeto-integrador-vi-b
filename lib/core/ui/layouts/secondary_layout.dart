@@ -6,9 +6,11 @@ class SecondaryLayout extends StatelessWidget {
   const SecondaryLayout({
     super.key,
     required this.child,
+    this.onBack,
   });
 
   final Widget child;
+  final VoidCallback? onBack;
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +19,20 @@ class SecondaryLayout extends StatelessWidget {
         automaticallyImplyActions: false,
         automaticallyImplyLeading: false,
         title: TextButton.icon(
-            onPressed: context.pop,
-            icon: const Icon(Icons.chevron_left),
-            label: const Text('Voltar'),
-            style: TextButton.styleFrom(
-              padding: const EdgeInsets.only(right: 8),
-              alignment: Alignment.centerLeft,
-              foregroundColor: Theme.of(context).colorScheme.primary,
-            ),
+          onPressed: onBack ?? context.pop,
+          icon: const Icon(Icons.chevron_left),
+          label: const Text('Voltar'),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.only(right: 8),
+            alignment: Alignment.centerLeft,
+            foregroundColor: Theme.of(context).colorScheme.primary,
           ),
+        ),
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(
-              left: 20, right: 20, bottom: 20
+            left: 20, right: 20, bottom: 20
           ),
           child: child,
         ),
