@@ -12,7 +12,7 @@ class ClienteFrequenteModel extends ClienteFrequente {
   factory ClienteFrequenteModel.fromMap(Map<String, Object?> map) {
     return ClienteFrequenteModel(
       id: map['id'] as int,
-      nome: map['cliente_nome'] as String,
+      nome: map['nome'] as String,
       quantidadeAtendimentos: map['quantidade_atendimentos'] as int,
       ultimaVisita: DateTime.parse(map['ultima_visita'] as String),
     );

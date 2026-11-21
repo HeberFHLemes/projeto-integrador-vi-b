@@ -116,15 +116,15 @@ class RelatorioFaturamentoView extends StatelessWidget {
                 contentPadding: EdgeInsetsGeometry.symmetric(horizontal: 4),
                 title: Text(
                   titulo,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  style: textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.bold
                   ),
                 ),
                 subtitle: Text(atendimento.servicoNome),
                 trailing: Text(
                   _moneyFormatter.format(atendimento.valorCobrado),
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
+                  style: textTheme.labelLarge?.copyWith(
+                    color: colorScheme.primary,
                   ),
                 ),
                 onTap: () => onAtendimentoPressed(

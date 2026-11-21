@@ -91,7 +91,7 @@ class RelatorioRepositoryImpl implements RelatorioRepository {
     GROUP BY c.id, c.nome
     ORDER BY
       quantidade_atendimentos DESC,
-    ultima_visita DESC
+      ultima_visita DESC
   ''';
 
   @override

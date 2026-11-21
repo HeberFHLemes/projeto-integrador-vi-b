@@ -8,6 +8,7 @@ import '../../../../core/ui/app_filter_segmented_button.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../viewmodels/relatorios_view_model.dart';
 import '../widgets/relatorio_faturamento_view.dart';
+import '../widgets/relatorio_frequencia_view.dart';
 
 class RelatoriosPage extends StatefulWidget {
   const RelatoriosPage({super.key});
@@ -128,7 +129,6 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
       );
     }
 
-    // TODO: Componentes para cada relatório
     return switch (_viewModel.tipoRelatorio) {
       TipoRelatorio.faturamento => RelatorioFaturamentoView(
         faturamento: _viewModel.relatorioFaturamento,
@@ -136,8 +136,11 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
         dateFormatter: _dateFormatter,
         onAtendimentoPressed: _abrirDetalhesAgendamento,
       ),
-      TipoRelatorio.frequencia =>
-        Center(child: Text('Relatórios - Clientes frequentes')),
+      TipoRelatorio.frequencia => RelatorioFrequenciaView(
+        frequencia: _viewModel.relatorioFrequencia,
+        dateFormatter: _dateFormatter,
+        onClientePressed: _abrirFichaCliente,
+      ),
     };
   }
 
@@ -163,6 +166,15 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
   void _abrirDetalhesAgendamento(int id) {
     context.goNamed(
       RouteNames.detalhesAgendamento,
+      pathParameters: {
+        'id': id.toString(),
+      },
+    );
+  }
+
+  void _abrirFichaCliente(int id) {
+    context.goNamed(
+      RouteNames.fichaCliente,
       pathParameters: {
         'id': id.toString(),
       },
