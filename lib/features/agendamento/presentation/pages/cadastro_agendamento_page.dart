@@ -8,12 +8,24 @@ import '../../../../core/utils/date_formatter.dart';
 import '../viewmodels/cadastro_agendamento_view_model.dart';
 import '../widgets/agendamento_form.dart';
 
-class CadastroAgendamentoPage extends StatefulWidget {
-  const CadastroAgendamentoPage({
-    super.key,
+class CadastroAgendamentoArgs {
+  const CadastroAgendamentoArgs({
+    this.clienteId,
     this.dataInicial,
   });
 
+  final int? clienteId;
+  final DateTime? dataInicial;
+}
+
+class CadastroAgendamentoPage extends StatefulWidget {
+  const CadastroAgendamentoPage({
+    super.key,
+    this.clienteId,
+    this.dataInicial,
+  });
+
+  final int? clienteId;
   final DateTime? dataInicial;
 
   @override
@@ -35,6 +47,7 @@ class _CadastroAgendamentoPageState extends State<CadastroAgendamentoPage> {
     super.initState();
 
     _viewModel = getIt<CadastroAgendamentoViewModel>();
+    _viewModel.selecionarCliente(widget.clienteId);
     _viewModel.selecionarData(widget.dataInicial);
     _viewModel.carregar();
   }

@@ -1,4 +1,5 @@
 import 'package:agendados/features/agendamento/presentation/enums/resultado_agendamento.dart';
+import 'package:agendados/features/agendamento/presentation/pages/cadastro_agendamento_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -83,7 +84,9 @@ class _AgendaPageState extends State<AgendaPage> {
       RouteNames.novoAgendamento,
       // enviando ao formulário a data selecionada
       // para ser usada como valor inicial do campo data.
-      extra: _viewModel.dataSelecionada,
+      extra: CadastroAgendamentoArgs(
+        dataInicial: _viewModel.dataSelecionada,
+      ),
     );
 
     if (!mounted) return;

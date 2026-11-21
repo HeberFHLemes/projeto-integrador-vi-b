@@ -10,6 +10,7 @@ import '../../../../core/ui/secondary_button.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/money_formatter.dart';
 import '../../../../core/utils/phone_number_utils.dart';
+import '../../../agendamento/presentation/pages/cadastro_agendamento_page.dart';
 import '../../domain/cliente.dart';
 import '../viewmodels/ficha_cliente_view_model.dart';
 import '../widgets/agendamento_cliente_list_tile.dart';
@@ -189,7 +190,9 @@ class _FichaClientePageState extends State<FichaClientePage> {
             label: 'Agendar para este cliente',
             onPressed: () => context.goNamed(
               RouteNames.novoAgendamento,
-              pathParameters: { 'id': cliente.id.toString() }
+              extra: CadastroAgendamentoArgs(
+                clienteId: cliente.id,
+              ),
             ),
             isExpanded: true,
           ),

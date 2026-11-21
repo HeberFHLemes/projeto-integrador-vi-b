@@ -39,10 +39,11 @@ final GoRouter appRouter = GoRouter(
               name: RouteNames.novoAgendamento,
               parentNavigatorKey: rootNavigatorKey,
               builder: (context, state) {
-                final dataInicial = state.extra as DateTime?;
+                final args = state.extra as CadastroAgendamentoArgs?;
 
                 return CadastroAgendamentoPage(
-                  dataInicial: dataInicial,
+                  clienteId: args?.clienteId,
+                  dataInicial: args?.dataInicial,
                 );
               },
             ),
