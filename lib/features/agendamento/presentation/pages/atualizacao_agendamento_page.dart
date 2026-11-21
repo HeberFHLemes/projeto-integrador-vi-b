@@ -36,11 +36,13 @@ class _AtualizacaoAgendamentoPageState
     super.initState();
 
     _viewModel = getIt<AtualizacaoAgendamentoViewModel>();
-    _viewModel.buscarAgendamento(widget.id);
+    _carregarAgendamento();
   }
 
   @override
   void dispose() {
+    _viewModel.dispose();
+    _observacoesController.dispose();
     super.dispose();
   }
 
@@ -152,5 +154,14 @@ class _AtualizacaoAgendamentoPageState
     if (horarioSelecionado != null) {
       _viewModel.selecionarHorario(horarioSelecionado);
     }
+  }
+
+  Future<void> _carregarAgendamento() async {
+    await _viewModel.buscarAgendamento(widget.id);
+
+    if (!mounted) return;
+
+    // Valor inicial de observações
+    _observacoesController.text = _viewModel.observacoes;
   }
 }
