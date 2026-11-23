@@ -58,7 +58,7 @@ class RelatoriosViewModel extends ChangeNotifier {
           );
       }
     } catch (e) {
-      errorMessage = 'Não foi possível carregar os dados do faturamento';
+      errorMessage = 'Não foi possível carregar os dados do relatório';
 
     } finally {
       _isLoading = false;

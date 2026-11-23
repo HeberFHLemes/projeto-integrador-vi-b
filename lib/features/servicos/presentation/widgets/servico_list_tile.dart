@@ -6,7 +6,7 @@ class ServicoListTile extends StatelessWidget {
     super.key,
     required this.nome,
     required this.preco,
-    this.ativo = true,
+    required this.ativo,
     required this.onTap,
   });
 

@@ -219,6 +219,7 @@ class _ServicosPageState extends State<ServicosPage> {
               return ServicoListTile(
                 nome: servico.nome,
                 preco: _moneyFormatter.format(servico.preco),
+                ativo: servico.ativo,
                 // redireciona direto para tela de atualização do serviço
                 onTap: () => _abrirAtualizacao(servico.id),
               );
