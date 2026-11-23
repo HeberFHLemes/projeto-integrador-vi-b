@@ -1,4 +1,3 @@
-import 'package:agendados/features/agendamento/presentation/enums/resultado_agendamento.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,6 +10,7 @@ import '../../../../core/ui/secondary_button.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/money_formatter.dart';
 import '../../domain/agendamento.dart';
+import '../enums/resultado_agendamento.dart';
 import '../extensions/status_agendamento_extension.dart';
 import '../viewmodels/detalhes_agendamento_view_model.dart';
 
@@ -55,21 +55,24 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
     return ListenableBuilder(
       listenable: _viewModel,
       builder: (context, child) {
+        final Widget conteudo;
+
         if (_viewModel.isLoading) {
-          return const Center(
+          conteudo = const Center(
             child: CircularProgressIndicator(),
           );
-        }
-
-        if (_viewModel.errorMessage != null) {
-          return Center(
+        } else if (_viewModel.errorMessage != null) {
+          conteudo = Center(
             child: Text(_viewModel.errorMessage!),
           );
+        } else {
+          conteudo = _buildDetalhes(_viewModel.agendamento!);
         }
 
-        final agendamento = _viewModel.agendamento!;
-
-        return _buildDetalhes(agendamento);
+        return SecondaryLayout(
+          onBack: _voltar,
+          child: conteudo,
+        );
       },
     );
   }
@@ -95,141 +98,144 @@ class _DetalhesAgendamentoPageState extends State<DetalhesAgendamentoPage> {
       _dateFormatter.hourMinute(agendamentoData)
     } • ${agendamento.cliente.nome}';
 
-    return SecondaryLayout(
-      onBack: _voltar,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              spacing: 8,
-              children: [
-                Text(
-                  'Detalhes do agendamento',
-                  style: textTheme.headlineSmall,
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            spacing: 8,
+            children: [
+              Text(
+                'Detalhes do agendamento',
+                style: textTheme.headlineSmall,
+              ),
 
-                // Card do agendamento
-                SizedBox(
-                  width: double.infinity,
-                  child: Card(
-                    elevation: 0,
-                    color: colorScheme.secondary,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _dateFormatter.detailedDate(agendamentoData),
-                            style: textTheme.labelLarge?.copyWith(
-                              color: colorScheme.primary,
-                            ),
+              // Card do agendamento
+              SizedBox(
+                width: double.infinity,
+                child: Card(
+                  elevation: 0,
+                  color: colorScheme.secondary,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          _dateFormatter.detailedDate(agendamentoData),
+                          style: textTheme.labelLarge?.copyWith(
+                            color: colorScheme.primary,
                           ),
+                        ),
 
-                          Text(
-                            agendamentoLabel,
-                            style: textTheme.headlineSmall,
-                          ),
+                        Text(
+                          agendamentoLabel,
+                          style: textTheme.headlineSmall,
+                        ),
 
-                          Text(
-                            agendamento.status.label,
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
-                            ),
+                        Text(
+                          agendamento.status.label,
+                          style: textTheme.bodyMedium?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
+              ),
 
-                Text(
-                  'Serviço do atendimento',
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
+              Text(
+                'Serviço do atendimento',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              ListTile(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+                title: Text(
+                  agendamento.servico.nome,
+                  style: textTheme.bodyLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
-                ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 4),
-                  title: Text(
-                    agendamento.servico.nome,
-                    style: textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                subtitle: Text('Preço do serviço'),
+                trailing: Text(
+                  _moneyFormatter.format(agendamento.valorTotal),
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.bold,
                   ),
-                  subtitle: Text('Preço do serviço'),
-                  trailing: Text(
-                    _moneyFormatter.format(agendamento.valorTotal),
+                ),
+              ),
+
+              const Divider(thickness: 0.2),
+
+              Row(
+                children: [
+                  Text(
+                    'Total previsto: ',
                     style: textTheme.bodyMedium?.copyWith(
-                      color: colorScheme.primary,
+                      color: colorScheme.onSurfaceVariant,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
 
-                const Divider(thickness: 0.2),
+                  const Spacer(),
 
-                Row(
-                  children: [
-                    Text(
-                      'Total previsto: ',
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurfaceVariant,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Text(
+                    _moneyFormatter.format(agendamento.valorTotal),
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
-
-                    const Spacer(),
-
-                    Text(
-                      _moneyFormatter.format(agendamento.valorTotal),
-                      style: textTheme.bodyLarge?.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-
-                Text(
-                  'Observações',
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                    fontWeight: FontWeight.bold,
                   ),
-                ),
+                ],
+              ),
 
-                Text(
-                  agendamento.observacoes ?? 'Nenhuma observação',
-                  style: textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+              Text(
+                'Observações',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+              ),
+
+              Text(
+                agendamento.observacoes ?? 'Nenhuma observação',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
           ),
+        ),
 
-          _buildActions(agendamento.id, agendamento.status),
-        ],
-      ),
+        _buildActions(agendamento.id, agendamento.status),
+      ],
     );
   }
 
   // Botões
   Widget _buildActions(int agendamentoId, StatusAgendamento status) {
+    if (status == StatusAgendamento.realizado) {
+      return PrimaryButton(
+        label: 'Marcar como não realizado',
+        onPressed: _alterarStatus,
+        isExpanded: true,
+      );
+    }
+
     return Column(
       children: [
         PrimaryButton(
-          label: status == StatusAgendamento.realizado
-            ? 'Marcar como não realizado'
-            : 'Marcar como realizado',
+          label: 'Marcar como realizado',
           onPressed: _alterarStatus,
           isExpanded: true,
         ),
