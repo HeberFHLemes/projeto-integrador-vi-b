@@ -10,6 +10,7 @@ import '../../../../core/ui/secondary_button.dart';
 import '../../../../core/utils/date_formatter.dart';
 import '../../../../core/utils/money_formatter.dart';
 import '../../../../core/utils/phone_number_utils.dart';
+import '../../../agendamento/presentation/extensions/status_agendamento_extension.dart';
 import '../../../agendamento/presentation/pages/cadastro_agendamento_page.dart';
 import '../../domain/cliente.dart';
 import '../viewmodels/ficha_cliente_view_model.dart';
@@ -150,29 +151,15 @@ class _FichaClientePageState extends State<FichaClientePage> {
                     itemBuilder: (context, index) {
                       final agendamento = _viewModel.agendamentos[index];
 
-                      String statusAgendamento = 'Agendado';
-
-                      if (agendamento.atendimento != null) {
-                        statusAgendamento = 'Realizado';
-
-                      } else if (
-                        agendamento.dataHora.isBefore(DateTime.now())
-                      ) {
-                        statusAgendamento = 'Não realizado';
-                      }
-
                       final data = agendamento.atendimento?.realizadoEm
                         ?? agendamento.dataHora;
-
-                      final preco = agendamento.atendimento?.valorCobrado
-                        ?? agendamento.servico.preco;
 
                       return AgendamentoClienteListTile(
                         dataAgendamento: _dateFormatter.dayMonthAndHour(data),
                         servico: agendamento.servico.nome,
-                        status: statusAgendamento,
-                        preco: _moneyFormatter.format(preco),
-                        onTap: () => context.goNamed(
+                        status: agendamento.status.label,
+                        preco: _moneyFormatter.format(agendamento.valorTotal),
+                        onTap: () => context.pushNamed(
                           RouteNames.detalhesAgendamento,
                           pathParameters: { 'id': agendamento.id.toString() }
                         ),
@@ -188,7 +175,7 @@ class _FichaClientePageState extends State<FichaClientePage> {
           // Redirecionar para novo agendamento, com o cliente escolhido.
           PrimaryButton(
             label: 'Agendar para este cliente',
-            onPressed: () => context.goNamed(
+            onPressed: () => context.pushNamed(
               RouteNames.novoAgendamento,
               extra: CadastroAgendamentoArgs(
                 clienteId: cliente.id,

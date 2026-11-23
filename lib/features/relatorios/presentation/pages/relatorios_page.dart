@@ -164,7 +164,7 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
   }
 
   void _abrirDetalhesAgendamento(int id) {
-    context.goNamed(
+    context.pushNamed(
       RouteNames.detalhesAgendamento,
       pathParameters: {
         'id': id.toString(),
@@ -173,7 +173,7 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
   }
 
   void _abrirFichaCliente(int id) {
-    context.goNamed(
+    context.pushNamed(
       RouteNames.fichaCliente,
       pathParameters: {
         'id': id.toString(),
