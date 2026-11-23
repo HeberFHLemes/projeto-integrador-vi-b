@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../app/router/route_names.dart';
 import '../../../../app/di/dependencies.dart';
@@ -15,6 +16,7 @@ import '../../../agendamento/presentation/pages/cadastro_agendamento_page.dart';
 import '../../domain/cliente.dart';
 import '../viewmodels/ficha_cliente_view_model.dart';
 import '../widgets/agendamento_cliente_list_tile.dart';
+import '../widgets/opcoes_contato_sheet.dart';
 
 class FichaClientePage extends StatefulWidget {
   const FichaClientePage({super.key, required this.id});
@@ -117,10 +119,15 @@ class _FichaClientePageState extends State<FichaClientePage> {
                             style: textTheme.headlineSmall,
                           ),
 
-                          Text(
-                            PhoneNumberUtils.format(cliente.telefone),
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onSurfaceVariant,
+                          InkWell(
+                            onTap: () => _mostrarOpcoesContato(
+                              cliente.telefone
+                            ),
+                            child: Text(
+                              PhoneNumberUtils.format(cliente.telefone),
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
                             ),
                           ),
                         ],
@@ -208,5 +215,25 @@ class _FichaClientePageState extends State<FichaClientePage> {
         message: 'Cliente atualizado com sucesso!',
       );
     }
+  }
+
+  Future<void> _mostrarOpcoesContato(String telefone) async {
+    final option = await OpcoesContatoSheet.show(context);
+
+    if (!mounted || option == null) return;
+
+    final numero = PhoneNumberUtils.onlyDigits(telefone);
+
+    final uri = switch (option) {
+      OpcaoContato.whatsapp => PhoneNumberUtils.toWhatsAppUri(numero),
+      OpcaoContato.tel => PhoneNumberUtils.toTelUri(numero),
+    };
+
+    if (uri == null) return;
+
+    await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    );
   }
 }

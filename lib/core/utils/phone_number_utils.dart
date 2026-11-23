@@ -37,4 +37,26 @@ abstract final class PhoneNumberUtils {
 
     return '+$d';
   }
+
+  /// Formata um número de telefone para utilizar com URI,
+  /// com objetivo de abrir o discador (tel).
+  static Uri? toTelUri(String? digits, {String countryCode = '55'}) {
+    final full = _withCountryCode(digits, countryCode);
+    return full == null ? null : Uri(scheme: 'tel', path: '+$full');
+  }
+
+  /// Formata um número de telefone para utilizar em link do WhatsApp (wa.me).
+  /// Retorna null se inválido.
+  static Uri? toWhatsAppUri(String? digits, {String countryCode = '55'}) {
+    final full = _withCountryCode(digits, countryCode);
+    return full == null ? null : Uri.https('wa.me', '/$full');
+  }
+
+  /// Garante o código de país.
+  /// (se tem 10–11 dígitos, assume número nacional).
+  static String? _withCountryCode(String? digits, String countryCode) {
+    final d = onlyDigits(digits);
+    if (!isValid(d)) return null;
+    return d.length <= 11 ? '$countryCode$d' : d;
+  }
 }
