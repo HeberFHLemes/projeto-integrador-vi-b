@@ -24,4 +24,6 @@ Pequenas e médias empresas (PMEs) e Micro-empreendedores Individuais (MEIs) que
 
 ## Distribuição do arquivo APK
 
-O arquivo APK gerado será encontrado na seção **Releases** deste repositório.
+O arquivo APK gerado (`agendados-v0.2.0.apk`) será encontrado na seção **Releases** deste repositório.
+
+[Release com o APK](https://github.com/HeberFHLemes/projeto-integrador-vi-b/releases/tag/v0.2.0)
