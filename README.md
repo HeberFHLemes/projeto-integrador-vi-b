@@ -20,3 +20,4 @@ Pequenas e médias empresas (PMEs) e Micro-empreendedores Individuais (MEIs) que
     - Tela com os nomes dos integrantes: [docs/wireframes/sobre.png](docs/wireframes/sobre.png)
 - Tecnologias utilizadas: [docs/TECNOLOGIAS.md](docs/TECNOLOGIAS.md)
 - Geração do arquivo APK: [docs/APK.md](docs/APK.md)
+- Arquitetura utilizada: [docs/ARQUITETURA.md](docs/ARQUITETURA.md)
