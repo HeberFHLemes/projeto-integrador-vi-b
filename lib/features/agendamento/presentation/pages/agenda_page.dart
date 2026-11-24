@@ -1,5 +1,3 @@
-import 'package:agendados/features/agendamento/presentation/enums/resultado_agendamento.dart';
-import 'package:agendados/features/agendamento/presentation/pages/cadastro_agendamento_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,10 +6,12 @@ import '../../../../app/router/route_names.dart';
 import '../../../../core/ui/app_material_banner.dart';
 import '../../../../core/ui/primary_button.dart';
 import '../../../../core/utils/date_formatter.dart';
+import '../enums/resultado_agendamento.dart';
 import '../extensions/status_agendamento_extension.dart';
 import '../viewmodels/agenda_view_model.dart';
 import '../widgets/agendamento_list_tile.dart';
 import '../widgets/day_selector.dart';
+import 'cadastro_agendamento_page.dart';
 
 class AgendaPage extends StatefulWidget {
   const AgendaPage({super.key});

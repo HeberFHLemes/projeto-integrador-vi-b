@@ -155,7 +155,7 @@ class AgendamentoForm extends StatelessWidget {
                         data == null
                           ? 'Selecionar data'
                           : _dateFormatter.dayMonthYear(data!),
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: textTheme.bodyLarge,
                       ),
                     ),
                   );
@@ -186,7 +186,7 @@ class AgendamentoForm extends StatelessWidget {
                       decoration: InputDecoration(),
                       child: Text(
                         horario?.format(context) ?? 'Selecionar horário',
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: textTheme.bodyLarge,
                       ),
                     ),
                   );

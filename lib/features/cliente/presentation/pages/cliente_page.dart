@@ -55,7 +55,7 @@ class _ClientePageState extends State<ClientePage> {
               children: [
                 Text(
                   'Clientes',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: textTheme.headlineSmall,
                 ),
 
                 const SizedBox(height: 8),

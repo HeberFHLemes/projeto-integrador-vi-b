@@ -56,7 +56,7 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
               children: [
                 Text(
                   'Relatórios',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: textTheme.headlineSmall,
                 ),
 
                 const SizedBox(height: 8),
@@ -101,7 +101,7 @@ class _RelatoriosPageState extends State<RelatoriosPage> {
                         _viewModel.inicio,
                         _viewModel.fim,
                       ),
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: textTheme.bodyMedium,
                     ),
                   ),
                 ),
