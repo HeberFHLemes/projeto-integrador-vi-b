@@ -21,3 +21,7 @@ Pequenas e médias empresas (PMEs) e Micro-empreendedores Individuais (MEIs) que
 - Tecnologias utilizadas: [docs/TECNOLOGIAS.md](docs/TECNOLOGIAS.md)
 - Geração do arquivo APK: [docs/APK.md](docs/APK.md)
 - Arquitetura utilizada: [docs/ARQUITETURA.md](docs/ARQUITETURA.md)
+
+## Distribuição do arquivo APK
+
+O arquivo APK gerado será encontrado na seção **Releases** deste repositório.
