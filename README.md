@@ -2,12 +2,12 @@
 Um aplicativo para a gestão de agendamentos para diferentes profissionais.
 
 ## Objetivo e problema que resolve
-O objetivo principal do aplicativo será facilitar a **gestão de agendamentos**.
+O objetivo principal do aplicativo é facilitar a **gestão de agendamentos**.
 
 Muitos profissionais (e empresas) que trabalham com horários agendados ainda mantém este controle no papel e caneta ou  tentam memorizar. 
 
-Logo, ele permitirá realizar esta gestão diretamente do dispositivo móvel deste profissional,
-promovendo a digitalização e possibilitando a análise de dados do negócio, o que apoiará na tomada de decisão, 
+Logo, ele permite realizar esta gestão diretamente do dispositivo móvel deste profissional,
+promovendo a digitalização e possibilitando a análise de dados do negócio, apoiando na tomada de decisão, 
 na organização e, futuramente, na oferta de promoções e programas de fidelização aos clientes.
 
 ## Público-alvo
